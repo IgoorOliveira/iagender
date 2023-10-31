@@ -1,0 +1,19 @@
+{% load static %}
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-email">
+        {% include 'svg/mail.html' %}
+    </label>
+    <input class="rounded w-full flex-1 pl-12 py-4 shadow-md" type="email" placeholder="Email" id="input-email">
+</div>
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-password">
+        {% include 'svg/lock.html' %}
+    </label>
+    <input class="rounded w-full flex-1 pl-12 py-4 shadow-md" type="password" placeholder="Senha" id="input-password">
+</div>
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-confirm-password">
+        {% include 'svg/lock.html' %}
+    </label>
+    <input class="rounded w-full flex-1 pl-12 py-4" type="password" placeholder="Confirmar senha" id="input-confirm-password">
+</div>

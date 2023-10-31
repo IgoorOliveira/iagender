@@ -1,0 +1,20 @@
+{% load static %}
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-name">
+        {% include 'svg/user.html' %}
+
+    </label>
+    <input class="input-with-icon" type="text" placeholder="Nome" id="input-name">
+</div>
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-name">
+        {% include 'svg/user.html' %}
+    </label>
+    <input class="input-with-icon" type="text" placeholder="Sobrenome" id="input-last-name">
+</div>
+<div class="relative">
+    <label class="absolute left-4 top-4" for="input-name">
+        {% include 'svg/calendar.html' %}
+    </label>
+    <input class="input-with-icon" type="date" placeholder="Data de nascimento" id="input-date-bithday">
+</div>

@@ -1,54 +1,26 @@
-{% load static tailwind_tags %}
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {% tailwind_css %}
-</head>
+{% block content %}
 <body class="flex flex-col min-h-screen">
-    <header class="flex justify-between items-center px-12 py-6">
-        <h1 class="text-2xl font-bold"><span class="text-primary">I</span>AGENDER</h1>
-        <nav class="flex gap-6">
-            <li class="list-none border-b-2 border-b-primary">
-                <a href="#">Home</a>
-            </li>
-            <li class="list-none">
-                <a href="#">Beneficíos</a>
-            </li>
-        </nav>
-        <nav class="flex gap-6">
-
-            <button class="w-[110px] border-2 border-primary py-1 rounded-md text-primary font-semibold">
-                Registrar
-            </button>
-            <button class="w-[110px] bg-primary py-2 rounded-md text-white font-semibold">
-                Entrar
-            </button>
-
-        </nav>
-    </header>
+    {% include 'header.html' %}
     <main class="relative flex-1 flex items-center ">
         <div class="w-full flex flex-col flex-1 ml-8 p-8 gap-8">
             <div class="relative w-full flex flex-col gap-4">
                 <h2 class="w-1/2 font-bold text-4xl">
                     <span class="text-primary">I</span>AGENDER: a maneira <span class="text-primary">inteligente</span> de administrar seu <span class="text-primary">tempo</span></h2>
                 <p class="text-zinc-800 w-1/4">
-                    Tenho um controle total da sua agenda por meio da nossa plataforma
+                    Tenha o controle total da sua agenda através da nossa plataforma
                 </p>
             </div>
             <button class="px-12 text-lg w-fit bg-primary py-4 rounded-md text-white font-semibold">
                 Conhecer agora
             </button>
-            <a class="absolute w-full text-center text-zinc-800 left-0 bottom-5" href="">
+            <a class="absolute w-full text-center left-0 bottom-5 animate-bounce" href="">
                 Conheça a plataforma
             </a>
         </div>
 
         <img class="absolute bottom-2 right-20 w-[600px] h-[520px]" src="{% static 'assets/banner_home_01.png' %}" alt="">
-        
     </main>
 </body>
-</html>
+{% endblock content %}
