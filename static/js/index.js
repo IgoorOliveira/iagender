@@ -63,10 +63,19 @@ function returnProgressBar() {
 }
 
 nextButton.addEventListener("click", ()=>{
-    showNextForm();
-    advanceProgressBar()
-    currentFormStep += 1;
-    showStepText();  
+    const spinButton = document.querySelector(".button-spin");
+    nextButton.classList.add("hidden");
+    spinButton.classList.remove("hidden");
+    setTimeout(() => {
+        nextButton.classList.remove("hidden");
+        spinButton.classList.add("hidden");
+        showNextForm();
+        advanceProgressBar()
+        currentFormStep += 1;
+        showStepText(); 
+    }, 500);
+
+     
 })
 backButton.addEventListener("click", ()=>{
     if(currentFormStep > 1) {

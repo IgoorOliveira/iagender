@@ -6,7 +6,7 @@
     <main class="flex-1 p-8 flex flex-col items-center gap-8">
         <div class="w-full flex justify-center">
 
-            <div class="w-[35%] px-6 py-3 rounded-xl flex justify-center items-center gap-10 border-2">
+            <div class="w-2/3 px-6 py-3 rounded-xl flex justify-center items-center gap-28 border-2">
                 <div class="flex gap-2 items-center active-bar">
                     <svg xmlns="http://www.w3.org/2000/svg" 
                         width="24" 
@@ -114,11 +114,17 @@
                 </div>
             </form>
         </div> 
-        <div class="mt-auto w-full flex justify-end items-center gap-4 px-28">
+        <div class="mt-auto w-full flex justify-end items-center gap-6 px-28">
             <button class="text-zinc-600 back-button">Voltar</button>
-            <button class="button-primary next-button">
+            <button class="flex justify-center button-primary next-button">
                 Próximo
             </button>
+            <button class="button-spin hidden">
+                <div class="flex justify-center button-primary">
+                    <div class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin"></div>
+                </div>
+            </button>
+            
 
         </div>
     </main>

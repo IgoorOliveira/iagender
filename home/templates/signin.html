@@ -1,0 +1,75 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<body class="flex min-h-screen">
+  <div class="p-4 w-1/2">
+    <div class="relative flex justify-center items-center rounded-lg bg-primary h-full p-4">
+      <div class="absolute flex justify-center items-center right-[20px] top-[20px] p-2 rounded-lg bg-white">
+        <a class="hover:rotate-45 duration-300" href="{% url 'index' %}">
+          {% include 'svg/arrow-left.html' %}
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-10 items-center w-1/2 p-8">
+    <h1 class="w-full text-2xl font-bold">
+      <a href="{{'/'}}"><span class="text-primary">I</span>AGENDER</a>
+    </h1>
+
+    <div class="w-2/3 h-full flex flex-col gap-4">
+      <div class="w-full">
+        <h2 class="font-semibold text-xl">Realizar login</h2>
+        <p class="text-zinc-700">Entre com suas informações</p>
+      </div>
+
+      <div class="p-2 w-full flex justify-center gap-4 ">
+        <a href="{% url 'login' %}" class=" text-center text-primary p-2 w-1/2 font-semibold border-b-2 border-primary">Login</a>
+        <a href="{% url 'register' %}" class="text-center font-extralight p-2 w-1/2 ">Registre-se</a>
+      </div>
+      <form class="w-full flex flex-col gap-4" action="">
+        <div class="relative">
+          <label class="absolute left-4 top-4" for="input-email">
+            {% include 'svg/mail.html' %}
+          </label>
+
+          <input
+            class="input-with-icon"
+            type="email"
+            placeholder="Email"
+            id="input-date-bithday"
+          />
+        </div>
+        <div class="relative">
+          <label class="absolute left-4 top-4" for="input-senha">
+            {% include 'svg/lock.html' %}
+          </label>
+          <input
+            class="input-with-icon"
+            type="password"
+            placeholder="Senha"
+            id="input-date-bithday"
+          />
+        </div>
+        <a href="" class="button-primary mt-4 w-full py-4" type="submit">
+          Entrar
+        </a>
+      </form>
+      <div class="relative">
+        <p class="h-[1px] w-full bg-black"></p>
+        <p class="absolute bottom-[-16px] w-full text-center p-1 bg-white">
+          Ou
+        </p>
+      </div>
+      <button
+        class="flex justify-center items-center gap-2 rounded-lg shadow-md px-6 py-3 border"
+      >
+        <img class="w-1/12" src="{% static 'assets/google.png' %}" alt="" />
+        Entrar com Google
+      </button>
+      <p>
+        Ainda não tem conta?<a class="font-semibold text-primary" href="{% url 'register' %}">
+          Registre-se</a
+        >
+      </p>
+    </div>
+  </div>
+</body>
+{% endblock content %}
