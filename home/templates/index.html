@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen bg-cover" style="background-image: url('../../static/assets/home.png');">
     {% include 'header.html' %}
-    <main class="relative flex-1 flex items-center ">
+    <main class="relative flex-1 flex items-center">
         <div class="w-full flex flex-col flex-1 ml-8 p-8 gap-8">
             <div class="relative w-full flex flex-col gap-4">
-                <h2 class="w-1/2 font-bold text-4xl">
-                    <span class="text-primary">I</span>AGENDER: a maneira <span class="text-primary">inteligente</span> de administrar seu <span class="text-primary">tempo</span></h2>
+                <h2 class="w-1/2 font-bold text-4xl font-ubuntu">
+                    A maneira <span class="text-primary">inteligente</span> de administrar seu <span class="text-primary">tempo</span></h2>
                 <p class="text-zinc-800 w-1/4">
                     Tenha o controle total da sua agenda através da nossa plataforma
                 </p>
             </div>
+            
+            
             <button class="px-12 text-lg w-fit bg-primary py-4 rounded-md text-white font-semibold">
                 Conhecer agora
             </button>
@@ -21,7 +23,7 @@
             </a>
         </div>
 
-        <img class="absolute bottom-2 right-20 w-[600px] h-[520px]" src="{% static 'assets/banner_home_01.png' %}" alt="">
+        <img class="absolute bottom-14 right-20 w-[600px] h-[520px]" src="{% static 'assets/banner_home_01.png' %}" alt="">
     </main>
 </body>
 {% endblock content %}

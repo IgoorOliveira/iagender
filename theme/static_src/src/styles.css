@@ -1,23 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
   .button-primary {
-    @apply w-[110px] bg-primary py-2 rounded-md text-white font-semibold text-center;
+    @apply w-[110px] bg-gradient-to-b from-primary to-secondary py-2 rounded-md text-white font-semibold text-center;
   }
   .input-with-icon {
-    @apply rounded-lg w-full bg-zinc-50 flex-1 pl-12 py-4 shadow-lg;
+    @apply rounded-lg w-full bg-zinc-50 pl-12 py-4 shadow-lg;
   }
   .active-bar {
     @apply rounded-xl bg-zinc-100 border p-3 overflow-x-hidden;
+  }
+  .card-category {
+    @apply h-full bg-white flex justify-center items-center flex-col gap-2 rounded-lg p-2  shadow-md shadow-zinc-950/20 cursor-pointer hover:scale-105 hover:duration-300;
   }
 }
 .animation-progress-bar {
   animation: slide 0.5s normal;
   transition: 0.5s all ease-in-out;
 }
-
+.font-ubuntu {
+  font-family: 'Ubuntu', sans-serif;
+}
 @keyframes slide {
   from {
     opacity: 0;

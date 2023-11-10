@@ -1,1 +1,29 @@
-<h1>Step 4</h1>
+{% load static %}
+<div class="h-[95%] flex flex-col gap-6 p-8">
+    <div>
+        <h2 class="font-bold text-xl form-title">Informações pessoais</h2>
+        <p class="text-zinc-600 form-subtitle">Comece por nos contar um pouco sobre você</p>
+    </div>
+    <form class="flex-1 flex flex-col">
+        <div class="flex flex-col gap-4">
+            <div class="relative">
+                <label class="absolute left-4 top-4" for="input-name">
+                    {% include 'svg/phone.html' %}
+                </label>
+                <input class="input-with-icon" type="text" placeholder="Celular" id="input-name">
+            </div>
+        </div>
+        <div class="mt-auto w-full flex justify-end items-center gap-6 ">
+            <button class="text-zinc-600 back-button">Voltar</button>
+            <button class="flex justify-center button-primary next-button">
+                Próximo
+            </button>
+            <button class="button-spin hidden">
+                <div class="flex justify-center button-primary">
+                    <div class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin">
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</div>

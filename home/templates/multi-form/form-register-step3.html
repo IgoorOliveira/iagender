@@ -1,1 +1,114 @@
-<h1>step3</h1>
+{% load static %}
+<div class="h-[95%] flex flex-col gap-6 p-8">
+    <div>
+        <h2 class="font-bold text-xl form-title">Categoria</h2>
+        <p class="text-zinc-600 form-subtitle">Qual seu modelo de negócio?</p>
+    </div>
+    <form class="flex-1 flex flex-col">
+        <div class="relative h-4/5 grid grid-cols-3 grid-rows-2 gap-6 bg-zinc-200 rounded-lg px-6 py-8 shadow-md">
+            <label for="bussiness" class="card-category bg-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-user-2 stroke-white">
+                    <circle cx="12" cy="8" r="5" />
+                    <path d="M20 21a8 8 0 1 0-16 0" />
+                </svg>
+                <p class="font-semibold text-white">Negócios</p>
+            </label>
+            <input class="hidden" type="radio" id="bussiness">
+            
+            <label for="marketing" class="card-category">
+                {% include 'svg/user.html' %}
+                <p class="font-semibold">Marketing</p>
+            </label>
+            <input class="hidden" type="radio" id="marketing">
+            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
+                <button class="p-2 rounded-full bg-zinc-950  flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left stroke-white rotate-180">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                </button>
+            </div>
+
+
+            <label for="marketing" class="card-category">
+                {% include 'svg/user.html' %}
+                <p class="font-semibold">Marketing</p>
+            </label>
+            <input class="hidden" type="radio" id="marketing">
+            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
+                <button class="p-2 rounded-full bg-zinc-950  flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-left stroke-white rotate-180">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                </button>
+            </div>
+
+
+            <label for="marketing" class="card-category">
+                {% include 'svg/user.html' %}
+                <p class="font-semibold">Marketing</p>
+            </label>
+            <input class="hidden" type="radio" id="marketing">
+            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
+                <button class="p-2 rounded-full bg-zinc-950  flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-left stroke-white rotate-180">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                </button>
+            </div>
+
+            <label for="marketing" class="card-category">
+                {% include 'svg/user.html' %}
+                <p class="font-semibold">Marketing</p>
+            </label>
+            <input class="hidden" type="radio" id="marketing">
+            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
+                <button class="p-2 rounded-full bg-zinc-950  flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-left stroke-white rotate-180">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                </button>
+            </div>
+
+            <label for="marketing" class="card-category">
+                {% include 'svg/user.html' %}
+                <p class="font-semibold">Marketing</p>
+            </label>
+            <input class="hidden" type="radio" id="marketing">
+            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
+                <button class="p-2 rounded-full bg-zinc-900 flex justify-center items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-arrow-left stroke-white rotate-180">
+                        <path d="m12 19-7-7 7-7" />
+                        <path d="M19 12H5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="mt-auto w-full flex justify-end items-center gap-6 ">
+            <button class="text-zinc-600 back-button">Voltar</button>
+            <button class="flex justify-center button-primary next-button">
+                Próximo
+            </button>
+            <button class="button-spin hidden">
+                <div class="flex justify-center button-primary">
+                    <div class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin">
+                    </div>
+                </div>
+            </button>
+        </div>
+    </form>
+</div>
