@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} Home {% endblock %}
 {% block content %}
 <body class="flex flex-col min-h-screen bg-cover" style="background-image: url('../../static/assets/home.png');">
     {% include 'header.html' %}
@@ -12,7 +13,6 @@
                     Tenha o controle total da sua agenda através da nossa plataforma
                 </p>
             </div>
-            
             
             <button class="px-12 text-lg w-fit bg-primary py-4 rounded-md text-white font-semibold">
                 Conhecer agora

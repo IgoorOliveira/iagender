@@ -87,8 +87,8 @@
                 <p class="font-semibold">Marketing</p>
             </label>
             <input class="hidden" type="radio" id="marketing">
-            <div class="absolute h-full top-0 right-[-20px]  flex justify-center items-center">
-                <button class="p-2 rounded-full bg-zinc-900 flex justify-center items-center">
+            <div class="absolute h-full top-0 right-[-20px] flex justify-center items-center">
+                <button type="button" class="p-2 rounded-full bg-zinc-900 flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#171616"
                         stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="lucide lucide-arrow-left stroke-white rotate-180">
@@ -99,15 +99,11 @@
             </div>
         </div>
         <div class="mt-auto w-full flex justify-end items-center gap-6 ">
-            <button class="text-zinc-600 back-button">Voltar</button>
-            <button class="flex justify-center button-primary next-button">
-                Próximo
-            </button>
-            <button class="button-spin hidden">
-                <div class="flex justify-center button-primary">
-                    <div class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin">
-                    </div>
-                </div>
+            <button type="button" class="text-zinc-600 back-button">Voltar</button>
+            <button type="button" peer class="flex justify-center button-primary next-button group">
+                <p class="group-[.active-spinner]:hidden">Próximo</p>
+                <div
+                    class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
             </button>
         </div>
     </form>

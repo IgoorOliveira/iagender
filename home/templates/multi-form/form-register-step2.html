@@ -138,15 +138,11 @@
 
         </div>
         <div class="mt-auto w-full flex justify-end items-center gap-6 ">
-            <button class="text-zinc-600 back-button">Voltar</button>
-            <button class="flex justify-center button-primary next-button">
-                Próximo
-            </button>
-            <button class="button-spin hidden">
-                <div class="flex justify-center button-primary">
-                    <div class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin">
-                    </div>
-                </div>
+            <button type="button" class="text-zinc-600 back-button">Voltar</button>
+            <button type="button" peer class="flex justify-center button-primary next-button group">
+                <p class="group-[.active-spinner]:hidden">Próximo</p>
+                <div
+                    class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
             </button>
         </div>
     </form>

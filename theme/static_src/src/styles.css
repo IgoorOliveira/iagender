@@ -8,7 +8,7 @@
     @apply w-[110px] bg-gradient-to-b from-primary to-secondary py-2 rounded-md text-white font-semibold text-center;
   }
   .input-with-icon {
-    @apply rounded-lg w-full bg-zinc-50 pl-12 py-4 shadow-lg;
+    @apply rounded-lg w-full bg-zinc-50 px-12 py-4 shadow-lg caret-primary;
   }
   .active-bar {
     @apply rounded-xl bg-zinc-100 border p-3 overflow-x-hidden;
@@ -16,6 +16,7 @@
   .card-category {
     @apply h-full bg-white flex justify-center items-center flex-col gap-2 rounded-lg p-2  shadow-md shadow-zinc-950/20 cursor-pointer hover:scale-105 hover:duration-300;
   }
+  
 }
 .animation-progress-bar {
   animation: slide 0.5s normal;
@@ -24,6 +25,7 @@
 .font-ubuntu {
   font-family: 'Ubuntu', sans-serif;
 }
+
 @keyframes slide {
   from {
     opacity: 0;
@@ -33,4 +35,13 @@
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+.input-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.008);
+}
+.input-sucess {
+  border: 1px solid rgb(21, 255, 0);
+  background-color: rgba(21, 255, 0, 0.008);
 }
