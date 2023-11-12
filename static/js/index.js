@@ -1,4 +1,5 @@
 import {validateForm}  from "./authStep1.js";
+import {validateForm3}  from "./authStep3.js";
 
 const nextButtons = document.querySelectorAll(".next-button");
 const backButtons = document.querySelectorAll(".back-button");
@@ -34,7 +35,7 @@ function handleNextButton() {
     const validateForms = {
             1: validateForm,
             2: validateForm,
-            3: validateForm,
+            3: validateForm3,
             4: validateForm
         }
         if(currentFormStep < qtySteps) {
@@ -57,7 +58,7 @@ function handleNextButton() {
         }
 }
 
-for(const nextButton of  nextButtons) {
+for(const nextButton of nextButtons) {
     nextButton.addEventListener("click", handleNextButton);
 }
 document.addEventListener("keydown", (ev) => {
@@ -79,4 +80,19 @@ for(const backButton of  backButtons) {
 
 document.addEventListener("DOMContentLoaded", recoverLastForm);
 
- 
+
+
+const categoriesCards = document.querySelectorAll(".card-category");
+
+for (const categoryCard of categoriesCards) {
+    categoryCard.addEventListener("click", ()=>{
+        disableStyleButton();
+        categoryCard.classList.add("active-category");
+    })
+}
+
+function disableStyleButton() {
+    categoriesCards.forEach((categoryCard) =>{
+        categoryCard.classList.remove("active-category");
+    })
+}

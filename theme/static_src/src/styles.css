@@ -19,6 +19,9 @@
   .active-category {
     @apply bg-primary;
   }
+  .alert-category {
+    @apply border border-red-700 bg-red-700/[2%];
+  }
   
 }
 .animation-progress-bar {
