@@ -16,6 +16,9 @@
   .card-category {
     @apply h-full bg-white flex justify-center items-center flex-col gap-2 rounded-lg p-2  shadow-md shadow-zinc-950/20 cursor-pointer hover:scale-105 hover:duration-300;
   }
+  .active-category {
+    @apply bg-primary;
+  }
   
 }
 .animation-progress-bar {

@@ -6,7 +6,7 @@
     <div class="relative flex justify-center items-center rounded-lg bg-primary h-full p-4">
       <div class="absolute flex justify-center items-center right-[20px] top-[20px] p-2 rounded-lg bg-white">
         <a class="hover:rotate-45 duration-300" href="{% url 'index' %}">
-          {% include 'svg/arrow-left.html' %}
+          <img src="{% static 'assets/svg/arrow-left.svg' %}" alt="Seta para esquerda">
         </a>
       </div>
     </div>
@@ -29,7 +29,7 @@
       <form class="w-full flex flex-col gap-4" action="">
         <div class="relative">
           <label class="absolute left-4 top-4" for="input-email">
-            {% include 'svg/mail.html' %}
+            <img src="{% static 'assets/svg/mail.svg' %}" alt="Ícone email">
           </label>
 
           <input
@@ -41,7 +41,8 @@
         </div>
         <div class="relative">
           <label class="absolute left-4 top-4" for="input-senha">
-            {% include 'svg/lock.html' %}
+            <img src="{% static 'assets/svg/lock.svg' %}" alt="Ícone cadeado">
+
           </label>
           <input
             class="input-with-icon"
