@@ -6,82 +6,21 @@
     </div>
     <form class="flex-1 flex flex-col">
         <div class="relative h-4/5 grid grid-cols-3 grid-rows-2 gap-6">
-            <div class="relative card-category group">
-                <label for="health" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                    <img src="{% static 'assets/svg/categories/category-medice.svg' %}" alt="Seta para baixo">
-                    <p class="font-semibold group-[.active-category]:text-white">Saúde</p>
-                
-                </label>
-                <div class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
-                    <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
-                </div>
-                <input name="categories" class="hidden" type="radio" id="health" value="Saúde">
-            </div>
+            
+            {% for category in categories %}
                 <div class="relative card-category group">
-                    <label for="beauty_aesthetics" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                        <img src="{% static 'assets/svg/categories/category-barber.svg' %}" alt="Seta para baixo">
-                        <p class="font-semibold group-[.active-category]:text-white">Beleza e estética</p>
+                    <label for="{{category.id_name}}" class="w-full h-full flex justify-center items-center flex-col gap-2">
+                        <img src="{% static 'assets/svg/categories/category-'|add:category.id_name|add:'.svg' %}" alt="Seta para baixo">
+                        <p class="font-semibold group-[.active-category]:text-white">{{category.name}}</p>
                 
                     </label>
                     <div
                         class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
                         <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
                     </div>
-                    <input name="categories" class="hidden" type="radio" id="beauty_aesthetics" value="Beleza e estética">
+                    <input name="categories" class="hidden" type="radio" id="{[category.id_name]}" value="{{category.name}}">
                 </div>
-                <div class="relative card-category group">
-                    <label for="exercise" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                        <img src="{% static 'assets/svg/categories/category-gym.svg' %}" alt="Seta para baixo">
-                        <p class="font-semibold group-[.active-category]:text-white">Exercicio</p>
-                
-                    </label>
-                    <div
-                        class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
-                        <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
-                    </div>
-                    <input name="categories" class="hidden" type="radio" id="exercise" value="Exercício">
-                </div>
-                <div class="relative card-category group">
-                    <label for="food" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                        <img src="{% static 'assets/svg/categories/category-food.svg' %}" alt="Seta para baixo">
-                        <p class="font-semibold group-[.active-category]:text-white">Alimentação</p>
-                
-                    </label>
-                    <div
-                        class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
-                        <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
-                    </div>
-                    <input name="categories" class="hidden" type="radio" id="food" value="Alimentação">
-                </div>
-                <div class="relative card-category group">
-                    <label for="service" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                        <img src="{% static 'assets/svg/categories/category-service.svg' %}" alt="Seta para baixo">
-                        <p class="font-semibold group-[.active-category]:text-white">Serviços</p>
-                
-                    </label>
-                    <div
-                        class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
-                        <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
-                    </div>
-                    <input name="categories" class="hidden" type="radio" id="service" value="service">
-                </div>
-                <div class="relative card-category group">
-                    <label for="others" class="w-full h-full flex justify-center items-center flex-col gap-2">
-                        <img src="{% static 'assets/svg/categories/category-others.svg' %}" alt="Seta para baixo">
-                        <p class="font-semibold group-[.active-category]:text-white">Outros</p>
-                
-                    </label>
-                    <div
-                        class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
-                        <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
-                    </div>
-                    <input name="categories" class="hidden" type="radio" id="others" value="Outros">
-                </div>
-
-
-        
-                    
-
+            {% endfor %}
         </div>
         <div class="mt-auto w-full flex justify-end items-center gap-6 ">
             <button type="button" class="text-zinc-600 back-button">Voltar</button>
