@@ -5,145 +5,48 @@
         <p class="text-zinc-600 form-subtitle">Escolha o horário que se adapta na sua rotina</p>
     </div>
     <form class="flex-1 flex flex-col">
+        {% csrf_token %}
         <div class="flex flex-col gap-4">
-            <div class="flex justify-between items-center border p-4 rounded-lg border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-4 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
+            <div class="flex flex-col gap-4">
+                {% for day in days %}
+                    <div class="flex flex-col gap-6 border p-4 rounded-lg border-zinc-300 shadow-sm group fields-days show-fields-hours day-open">
+                        <div class="flex justify-between items-center ">
+                            <div class="flex gap-4 items-center">
+                                <div class="relative inline-block w-12">
+                                    <input type="checkbox" id="toggle-day-{{forloop.counter}}" class="hidden toggle-input" checked>
+                                    <label for="toggle-day-{{forloop.counter}}"
+                                        class="toggle-label block overflow-hidden h-6 bg-gray-300 rounded-full cursor-pointer bg-primary"></label>
+                                    <div
+                                        class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300 toggle-checked">
+                                    </div>
+                                </div>
+                                <p>{{day.name}}</p>
+                            </div>
+                            <div class="items-center gap-2 hidden group-[.day-open]:flex">
+                                <div>
+                                    <p class="text-sm text-zinc-500 block group-[.show-fields-hours]:hidden">Mostrar horários</p>
+                                    <p class="text-sm text-zinc-500 hidden group-[.show-fields-hours]:block">Ocultar</p>
+                                </div>
+                                <img class="cursor-pointer arrow-details group-[.show-fields-hours]:turn-arrow"
+                                    src="{% static 'assets/svg/chevron-down.svg' %}" alt="Seta para baixo">
+                            </div>
+                            <p class="text-sm text-zinc-500 block group-[.day-open]:hidden">Fechado</p>
+                    
+                        </div>
+                        <div class="flex-col gap-2 fields-hours hidden group-[.show-fields-hours]:flex">
+                            
                         </div>
                     </div>
-                    <p>Segunda</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg" type="text" placeholder="18:00">
-                </div>
+                {% endfor %}
             </div>
-            <div class="flex justify-between items-center p-4 rounded-lg border border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-2 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p class="font-semibold">Terça</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg border-zinc-200" type="text" placeholder="18:00">
-                </div>
+            <div class="mt-auto w-full flex justify-end items-center gap-6 ">
+                <button type="button" class="text-zinc-600 back-button">Voltar</button>
+                <button type="button" peer class="flex justify-center button-primary next-button group">
+                    <p class="group-[.active-spinner]:hidden">Próximo</p>
+                    <div
+                        class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block"></div>
+                </button>
             </div>
-
-            <div class="flex justify-between items-center p-4 rounded-lg border border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-2 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p class="font-semibold">Quarta</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg border-zinc-200" type="text" placeholder="18:00">
-                </div>
-            </div>
-            <div class="flex justify-between items-center border p-4 rounded-lg border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-4 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p>Quinta</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg" type="text" placeholder="18:00">
-                </div>
-            </div>
-            <div class="flex justify-between items-center p-4 rounded-lg border border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-2 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p class="font-semibold">Sexta</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg border-zinc-200" type="text" placeholder="18:00">
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center p-4 rounded-lg border border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-2 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p class="font-semibold">Sábado</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg border-zinc-200" type="text" placeholder="18:00">
-                </div>
-            </div>
-            <div class="flex justify-between items-center p-4 rounded-lg border border-zinc-300 shadow-sm">
-                <div class="w-1/2 flex gap-2 items-center">
-                    <div class="relative inline-block w-12 align-middle select-none">
-                        <input type="checkbox" id="toggle" name="toggle" class="hidden" />
-                        <label for="toggle"
-                            class="toggle-label block overflow-hidden h-6 bg-zinc-600 rounded-full cursor-pointer"></label>
-                        <div
-                            class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300">
-                        </div>
-                    </div>
-                    <p class="font-semibold">Domingo</p>
-                </div>
-
-                <div class="w-1/2 flex gap-2">
-                    <input class="w-1/2 border border-zinc-200 rounded-lg" type="text" placeholder="07:00">
-                    <input class="w-1/2 border rounded-lg border-zinc-200" type="text" placeholder="18:00">
-                </div>
-            </div>
-
-
-        </div>
-        <div class="mt-auto w-full flex justify-end items-center gap-6 ">
-            <button type="button" class="text-zinc-600 back-button">Voltar</button>
-            <button type="button" peer class="flex justify-center button-primary next-button group">
-                <p class="group-[.active-spinner]:hidden">Próximo</p>
-                <div
-                    class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
-            </button>
         </div>
     </form>
 </div>
