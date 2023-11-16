@@ -1,9 +1,10 @@
-import {validateForm}  from "./authStep1.js";
-import {validateForm3}  from "./authStep3.js";
+import {validateForm} from "./authStep1.js";
+import {validateForm3} from "./authStep3.js";
+import {validateForm4} from "./authStep4.js";
 
 const nextButtons = document.querySelectorAll(".next-button");
 const backButtons = document.querySelectorAll(".back-button");
-const qtySteps = 4;
+const qtySteps = 6;
 let currentFormStep = Number(localStorage.getItem("currentFormStep") || 1);
 
 function recoverLastForm() {
@@ -32,30 +33,32 @@ function returnProgressBar() {
 }
 
 function handleNextButton() {
+
     const validateForms = {
             1: validateForm,
             2: validateForm,
             3: validateForm3,
-            4: validateForm
-        }
-        if(currentFormStep < qtySteps) {
-            
-            if(validateForms[currentFormStep]()) {
+            4: validateForm,
+            5: validateForm4
+    }
+    if(currentFormStep < qtySteps) {
 
-                this.classList.add("active-spinner");
+        if(validateForms[currentFormStep]()) {
 
-                setTimeout(() =>{
-                    showNextForm();
-                    advanceProgressBar();
-                    currentFormStep += 1;
-                    localStorage.setItem("currentFormStep", currentFormStep);
-                    this.classList.remove("active-spinner");
-                    
-                }, 500)
-            } else {
-                event.preventDefault()
-            }  
-        }
+            this.classList.add("active-spinner");
+
+            setTimeout(() =>{
+                showNextForm();
+                advanceProgressBar();
+                currentFormStep += 1;
+                localStorage.setItem("currentFormStep", currentFormStep);
+                this.classList.remove("active-spinner");
+                
+            }, 500)
+        } else {
+            event.preventDefault()
+        }  
+    }
 }
 
 for(const nextButton of nextButtons) {
@@ -79,7 +82,6 @@ for(const backButton of  backButtons) {
 }
 
 document.addEventListener("DOMContentLoaded", recoverLastForm);
-
 
 
 const categoriesCards = document.querySelectorAll(".card-category");

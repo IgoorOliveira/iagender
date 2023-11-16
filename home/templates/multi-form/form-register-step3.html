@@ -18,7 +18,7 @@
                         class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
                         <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
                     </div>
-                    <input name="categories" class="hidden" type="radio" id="{[category.id_name]}" value="{{category.name}}">
+                    <input name="categories" class="hidden" type="radio" id="{{category.id_name}}" value="{{category.name}}">
                 </div>
             {% endfor %}
         </div>

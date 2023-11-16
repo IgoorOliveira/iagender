@@ -1,7 +1,6 @@
 export function validateForm3() {
     const inputsCategories = document.getElementsByName("categories");
     for(const inputCategory of inputsCategories) {
-        console.log(inputCategory)
         if(inputCategory.checked) return true
     }
     updateStyleCard()
