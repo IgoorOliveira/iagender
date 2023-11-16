@@ -1,6 +1,7 @@
 import {validateForm} from "./authStep1.js";
 import {validateForm3} from "./authStep3.js";
 import {validateForm4} from "./authStep4.js";
+import {validateForm5} from "./authStep5.js";
 
 const nextButtons = document.querySelectorAll(".next-button");
 const backButtons = document.querySelectorAll(".back-button");
@@ -38,7 +39,7 @@ function handleNextButton() {
             1: validateForm,
             2: validateForm,
             3: validateForm3,
-            4: validateForm,
+            4: validateForm5,
             5: validateForm4
     }
     if(currentFormStep < qtySteps) {
