@@ -63,7 +63,7 @@ adress.cep.addEventListener("focus", ()=>{
     adress.cep.classList.remove("input-error");
 })
 
-export function validateForm4() {
+export function validateFormAdress() {
     let validate = true
     Object.keys(adress).forEach(typeInput => {
         if (typeInput !== "complement" && adress[typeInput].value === "") {

@@ -1,4 +1,4 @@
-export function validateForm3() {
+export function validateFormCategories() {
     const inputsCategories = document.getElementsByName("categories");
     for(const inputCategory of inputsCategories) {
         if(inputCategory.checked) return true

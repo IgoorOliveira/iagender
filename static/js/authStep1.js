@@ -21,7 +21,7 @@ function resetStyleInput(user) {
     })
 }
 
-export function validateForm() {
+export function validateFormUser() {
     const user = {
         "name": document.querySelector(".input-name").value.trim(),
         "email": document.querySelector(".input-email").value.trim(),

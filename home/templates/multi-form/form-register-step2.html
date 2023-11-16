@@ -1,52 +1,41 @@
 {% load static %}
 <div class="h-[95%] flex flex-col gap-6 p-8">
     <div>
-        <h2 class="font-bold text-xl form-title">Agenda</h2>
-        <p class="text-zinc-600 form-subtitle">Escolha o horário que se adapta na sua rotina</p>
+        <h2 class="font-bold text-xl form-title">Informações pessoais</h2>
+        <p class="text-zinc-600 form-subtitle">Comece por nos contar um pouco sobre você</p>
     </div>
     <form class="flex-1 flex flex-col">
-        {% csrf_token %}
         <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-4">
-                {% for day in days %}
-                    <div class="flex flex-col gap-6 border p-4 rounded-lg border-zinc-300 shadow-sm group fields-days show-fields-hours day-open">
-                        <div class="flex justify-between items-center ">
-                            <div class="flex gap-4 items-center">
-                                <div class="relative inline-block w-12">
-                                    <input type="checkbox" id="toggle-day-{{forloop.counter}}" class="hidden toggle-input" checked>
-                                    <label for="toggle-day-{{forloop.counter}}"
-                                        class="toggle-label block overflow-hidden h-6 bg-gray-300 rounded-full cursor-pointer bg-primary"></label>
-                                    <div
-                                        class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300 toggle-checked">
-                                    </div>
-                                </div>
-                                <p>{{day.name}}</p>
-                            </div>
-                            <div class="items-center gap-2 hidden group-[.day-open]:flex">
-                                <div>
-                                    <p class="text-sm text-zinc-500 block group-[.show-fields-hours]:hidden">Mostrar horários</p>
-                                    <p class="text-sm text-zinc-500 hidden group-[.show-fields-hours]:block">Ocultar</p>
-                                </div>
-                                <img class="cursor-pointer arrow-details group-[.show-fields-hours]:turn-arrow"
-                                    src="{% static 'assets/svg/chevron-down.svg' %}" alt="Seta para baixo">
-                            </div>
-                            <p class="text-sm text-zinc-500 block group-[.day-open]:hidden">Fechado</p>
-                    
-                        </div>
-                        <div class="flex-col gap-2 fields-hours hidden group-[.show-fields-hours]:flex">
-                            
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="relative">
+                <label class="absolute left-4 top-4" for="input-company">
+                    <img src="{% static 'assets/svg/company.svg' %}" alt="Ícone telefone">
+                </label>
+                <input class="input-with-icon input-company" type="text" placeholder="Nome da empresa (opcional)" id="input-company" required>
             </div>
-            <div class="mt-auto w-full flex justify-end items-center gap-6 ">
-                <button type="button" class="text-zinc-600 back-button">Voltar</button>
-                <button type="button" peer class="flex justify-center button-primary next-button group">
-                    <p class="group-[.active-spinner]:hidden">Próximo</p>
-                    <div
-                        class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block"></div>
-                </button>
+            <div class="relative">
+                <label class="absolute left-4 top-4" for="input-user">
+                    <img src="{% static 'assets/svg/link.svg' %}" alt="Ícone telefone">
+                </label>
+                <input class="input-with-icon input-user peer" type="text" placeholder="Insira o seu nome de usuário (iagender.com/nome)" id="input-user" required>
+                <img class="absolute top-4 right-4 hidden peer-[.input-error]:block" src="{% static 'assets/svg/alert-badge.svg' %}"alt="Ícone de alerta">
+                <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block" src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
             </div>
+            <div class="relative">
+                <label class="absolute left-4 top-4" for="input-phone">
+                    <img src="{% static 'assets/svg/phone.svg' %}" alt="Ícone telefone">
+                </label>
+                <input class="input-with-icon input-phone peer" type="text" placeholder="Celular" id="input-phone" required>
+                <img class="absolute top-4 right-4 hidden peer-[.input-error]:block" src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
+                <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block" src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
+            </div>
+        </div>
+        <div class="mt-auto w-full flex justify-end items-center gap-6 ">
+            <button type="button" class="text-zinc-600 back-button">Voltar</button>
+            <button type="button" peer class="flex justify-center button-primary next-button group">
+                <p class="group-[.active-spinner]:hidden">Próximo</p>
+                <div
+                    class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
+            </button>
         </div>
     </form>
 </div>
