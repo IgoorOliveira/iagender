@@ -5,7 +5,7 @@ import {validateFormAdress} from "./authStep4.js";
 
 const nextButtons = document.querySelectorAll(".next-button");
 const backButtons = document.querySelectorAll(".back-button");
-const qtySteps = 6;
+const qtySteps = 5;
 let currentFormStep = Number(localStorage.getItem("currentFormStep") || 1);
 
 function recoverLastForm() {
@@ -43,7 +43,7 @@ function handleNextButton() {
     }
     if(currentFormStep < qtySteps) {
 
-        if(validateForms[currentFormStep]() || currentFormStep == 5) {
+        if(validateForms[currentFormStep]()) {
 
             this.classList.add("active-spinner");
 
@@ -55,7 +55,8 @@ function handleNextButton() {
                 this.classList.remove("active-spinner");
                 
             }, 500)
-        } else {
+        }
+         else if(currentFormStep != 5){
             event.preventDefault()
         }  
     }
