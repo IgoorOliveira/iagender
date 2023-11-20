@@ -1,9 +1,12 @@
-function createHoursIntervalFieldComponent() {
+
+function createHoursIntervalFieldComponent(day) {
     const hoursIntervalField = document.createElement("div");
     hoursIntervalField.classList.add("w-[90%]", "flex", "items-center", "gap-2")
     const inputOpen = createSelectTimeComponent("09:00")
     const inputClose = createSelectTimeComponent("18:00")
     const p = document.createElement("p").innerText = "Até"
+    inputOpen.name = `initial_interval_${day.toLowerCase()}`
+    inputClose.name = `close_interval_${day.toLowerCase()}`
 
     hoursIntervalField.append(inputOpen, p, inputClose);
     return hoursIntervalField
@@ -44,10 +47,10 @@ function createSelectTimeComponent(valueStandardSelected) {
     return select
 }
 
-function createRowFieldsComponent(){
+function createRowFieldsComponent(day){
     const row = document.createElement("div");
     row.classList.add("flex", "justify-between");
-    const intervalComponent = createHoursIntervalFieldComponent();
+    const intervalComponent = createHoursIntervalFieldComponent(day);
     const trashIcon = createTrashIcon();
     row.append(intervalComponent, trashIcon);
     return row;
@@ -60,7 +63,8 @@ function createAddFieldsIcon() {
 
     icon.classList.add("cursor-pointer", "add-fields");
     icon.addEventListener("click", () =>{
-        const rowFields = createRowFieldsComponent();
+        const day = icon.closest(".fields-days").id
+        const rowFields = createRowFieldsComponent(day);
         const fieldHours = icon.closest('.fields-hours');
         fieldHours.append(rowFields);
     })
@@ -71,8 +75,10 @@ function createTrashIcon(){
     const icon = document.createElement("img");
     icon.src = `../static/assets/svg/trash.svg`
     icon.style.cursor = "pointer"
+
     icon.addEventListener("click", () =>{
-        icon.parentNode.remove()
+        row = icon.parentNode
+        row.remove()
     })
     return icon;
 }
@@ -133,7 +139,9 @@ document.addEventListener("DOMContentLoaded", () =>{
     fieldsHours.forEach(field =>{
         const row = document.createElement("div");
         row.classList.add("flex", "justify-between");
-        const intervalComponent = createHoursIntervalFieldComponent();
+        const day = field.closest(".fields-days").id
+        console.log(day)
+        const intervalComponent = createHoursIntervalFieldComponent(day);
         const addFieldsIcon = createAddFieldsIcon();
         row.append(intervalComponent, addFieldsIcon);
         field.append(row)

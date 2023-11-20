@@ -7,14 +7,14 @@
             <label for="{{category.id_name}}" class="w-full h-full flex justify-center items-center flex-col gap-2">
                 <img src="{% static 'assets/svg/categories/category-'|add:category.id_name|add:'.svg' %}"
                     alt="Seta para baixo">
-                <p class="font-semibold group-[.active-category]:text-white">{{category.name}}</p>
+                <p class="font-semibold group-[.active-category]:text-white">{{category.category_name}}</p>
     
             </label>
             <div
                 class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
                 <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
             </div>
-            <input name="categories" class="hidden" type="radio" id="{{category.id_name}}" value="{{category.name}}">
+            <input name="category_name" class="hidden categories" type="radio" id="{{category.id_name}}" value="{{category.category_name}}">
         </div>
         {% endfor %}
     </div>

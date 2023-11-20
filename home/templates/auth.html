@@ -17,7 +17,7 @@
     <main class="flex-1 flex justify-center">
         <div class="w-2/5 flex flex-col gap-6 p-8">
             {% include 'multi-form/title-register-1.html' %}
-            <form action="" class="w-full h-[95%] flex flex-col">
+            <form method="post" action="{% url 'user' %}" class="w-full h-[95%] flex flex-col">
                 <div class="hidden flex-1 form-register-step1">
                     {% include 'multi-form/form-register-step1.html' %}
                 </div>
