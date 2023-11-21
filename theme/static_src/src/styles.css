@@ -28,6 +28,15 @@
   .turn-arrow {
     @apply rotate-180 transition-all duration-300
   }
+  .prev-days, .next-days {
+    @apply text-zinc-500
+  }
+  .current-days {
+    @apply font-semibold
+  }
+  .today {
+    @apply bg-primary rounded-full text-white;
+  }
   
 }
 .animation-progress-bar {
@@ -57,3 +66,11 @@
   border: 1px solid rgb(21, 255, 0);
   background-color: rgba(21, 255, 0, 0.008);
 }
+
+.grid-events {
+  display: grid;
+  grid-template-rows: repeat(24, minmax(calc(100%/8), auto));
+}
+
+
+

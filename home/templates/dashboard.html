@@ -1,38 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
+<html lang='en'>
 
+<head>
+    <meta charset='utf-8' />
+    <script src="{% static 'js/calendar.js' %}" defer type="module"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'></script>
+
+</head>
 {% endblock head %}
 
 {% block content %}
 <div class="flex w-full h-screen ">
-    <aside class="w-1/5 h-screen px-4 py-8">
-        <h1 class="w-full text-center text-2xl font-bold"><a href="{{'/'}}"><span class="text-primary">I</span>AGENDER</a></h1>
-
-        <nav class="w-full flex flex-col gap-4 mt-8">
-            <button>
-                <div></div>
-                <p class="font-semibold">Home</p>
-            </button>
-
-            <button>
-                <div></div>
-                <p class="font-semibold">Calendário</p>
-            </button>
-
-            <button>
-                <div></div>
-                <p class="font-semibold">Contatos</p>
-            </button>
-
-            <button>
-                <div></div>
-                <p class="font-semibold">Contatos</p>
-            </button>
-        </nav>
-    </aside>
-    <main class="bg-zinc-300 flex-1">
-        
+    {% include 'aside-dashboard.html' %}
+    <main class="flex bg-zinc-200 flex-1">
+        <div class="flex flex-col gap-4 w-2/3 p-8">
+            <div class="p-4 flex gap-2 items-center rounded-lg">
+                <img class="rounded-full w-20 h-20" src="{% static 'assets/foto_github.png' %}" alt="">
+                <div>
+                    <p class="text-xl font-semibold">Igor Oliveira</p>
+                    <p class="">https://iagender.com/igoroliveira</p>
+                </div>
+            </div>
+            <div class="flex-1 flex flex-col gap-4">
+                <div class="flex-1  rounded-lg bg-complement"></div>
+                <div class="flex-1 rounded-lg bg-complement"></div>
+            </div>
+        </div>
+        <div class="w-1/3 bg-800 p-8">
+            <div class="flex flex-col gap-2 bg-complement p-4 rounded-lg calendar">
+                <div class="flex justify-between gap-4">
+                    <img class="prev-month-button" src="{% static 'assets/svg/arrow-left.svg' %}" alt="">
+                    <p class="font-semibold month"></p>
+                    <img class="next-month-button rotate-180" src="{% static 'assets/svg/arrow-left.svg' %}" alt="">
+                </div>
+                <div class="grid grid-flow-col weekdays list-none">
+                    <li class="flex justify-center items-centeR">D</li>
+                    <li class="flex justify-center items-center text-sm">S</li>
+                    <li class="flex justify-center items-center">T</li>
+                    <li class="flex justify-center items-center">Q</li>
+                    <li class="flex justify-center items-center">Q</li>
+                    <li class="flex justify-center items-center">S</li>
+                    <li class="flex justify-center items-centeR">S</li>
+                    
+                </div>
+                <div class="grid gap-2 grid-rows-6 grid-cols-7 list-none days ">
+                    
+                  
+                </div>
+            </div>
+        </div>
     </main>
 </div>
 {% endblock content %}
