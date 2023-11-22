@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import Context
 from .models import Account, Category, Adress, Day, Interval, Establishment, EstablishmentDay
 from .forms import AccountForm, EstablishmentForm, AdressForm, DayFormSet
+
 
 from datetime import timedelta
 
@@ -35,18 +36,6 @@ def get_days():
     data = list(days.values())
     return data
 
-"""def register_intervals(request):
-    days_instance = EstablishmentDay.objects.filter(status=True)
-    for day_instance in days_instance:
-        initial_intervals = request.POST.getlist(f"initial_interval_{day_instance['day'].lower()}")
-        close_intervals = request.POST.getlist(f"close_interval_{day_instance['day'].lower()}")
-        print(initial_intervals, close_intervals)
-        Interval.objects.create(
-            initial_interval=initial_intervals[index],
-            close_interval=close_intervals[index], 
-            day=day_instance
-        )
-    """
 
 def create_operating_days(request, establishment_instance, operating_days):
     for day in get_days():
@@ -96,6 +85,22 @@ def get_user(request):
         else:
             return redirect('auth')
 
+def get_services(request):
+    if request.method == "GET":
+        return render(request, 'services.html')
+    
+def get_operating_days(request):
+    context = {}
+    list_operating_days = []
+    if request.method == "GET":
+        establishment_days = EstablishmentDay.objects.filter(status=True).select_related("name")
+        for establishment_day in establishment_days:
+            day_name = establishment_day.day.day
+            list_operating_days.append(day_name)
+        context["operating_days"] = list_operating_days
+    return JsonResponse(context)
+
+    
 
 def validate_form(request, formModel):
     fields = formModel().fields.keys()

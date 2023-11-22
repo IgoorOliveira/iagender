@@ -35,7 +35,7 @@
     @apply font-semibold
   }
   .today {
-    @apply bg-primary rounded-full text-white;
+    @apply bg-primary/20 rounded-full text-primary font-semibold p-1 aspect-2;
   }
   
 }
