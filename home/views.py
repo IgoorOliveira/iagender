@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.template import Context
 from .models import Account, Category, Adress, Day, Interval, Establishment, EstablishmentDay
-from .forms import AccountForm, EstablishmentForm, AdressForm, DayFormSet
+from .forms import AccountForm, EstablishmentForm, AdressForm, ServiceForm
 
 
 from datetime import timedelta
@@ -85,9 +85,6 @@ def get_user(request):
         else:
             return redirect('auth')
 
-def get_services(request):
-    if request.method == "GET":
-        return render(request, 'services.html')
     
 def get_operating_days(request):
     context = {}
@@ -100,9 +97,26 @@ def get_operating_days(request):
         context["operating_days"] = list_operating_days
     return JsonResponse(context)
 
-    
+
+def get_services(request):
+    if request.method == "GET":
+        return render(request, 'services.html')
+    else:
+        form = ServiceForm(request.POST.copy())
+        if 'duration' in form.data:
+
+            form.data['duration'] = form.data['duration'][:-1]
+
+        if form.is_valid():
+            service_instance = form.save(commit=False)
+        return redirect("services")
+
+def get_settings(request):
+    if request.method == "GET":
+        return render(request, "settings.html")
 
 def validate_form(request, formModel):
     fields = formModel().fields.keys()
     form = formModel({field: request[field] for field in fields})
     return form
+

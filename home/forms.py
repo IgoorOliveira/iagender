@@ -36,6 +36,11 @@ class OperatingDayForm(forms.ModelForm):
         model = EstablishmentDay
         fields = "__all__"
 
+class ServiceForm(forms.ModelForm):
+    class Meta:
+        model = Service
+        fields = ["name", "duration", "description"]
+
 
 
 DayFormSet = modelform_factory(EstablishmentDay, exclude=['status'])

@@ -7,16 +7,43 @@
 {% block content %}
 <div class="relative flex w-full h-screen">
     {% include 'aside-dashboard.html' %}
-    <main class="relative h-screen flex-1">
-        <button
-            class="absolute right-4 bottom-4 bg-primary text-white text-xl rounded-lg px-8 py-2 register-service-button">Cadastrar</button>
-    </main>
+    <div class="flex-1 flex flex-col bg-zinc-200">
+        {% include 'header-dashboard.html' with name="Serviços" %}
+        <main class="flex-1 relative p-4">
+            <div class="w-1/3 h-1/5 p-4 rounded-lg bg-complement border shadow-md">
+                <p class="font-semibold text-xl">Serviço A</p>
+                <div class="flex gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        width="24" 
+                        height="24" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor"
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round" 
+                        class="lucide lucide-clock-4 stroke-zinc-600">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <p class="text-zinc-600">Duração: 30m</p>
+                </div>
+            </div>
+            <button
+                class="absolute right-4 bottom-4 rounded-lg px-8 py-2 register-service-button">
+                <img src="{% static 'assets/svg/plus-circle.svg' %}" alt="">
+            </button>
+        </main>
+    </div>
+    
     <div class="fixed top-0 left-0 w-full h-screen hidden justify-center items-center bg-zinc-950/40 popup-wrapper ">
         <div class="relative flex flex-col gap-6 w-1/3 bg-complement rounded-lg p-8 shadow-md">
-            <button class="absolute top-2 right-2 text-xl close-popup-button">x</button>
+            <button class="absolute top-5 right-5 close-popup-button">
+                <img src="{% static 'assets/svg/x.svg' %}" alt="">
+            </button>
             <h2 class="font-semibold text-xl">Cadastro de serviços</h2>
-            <div class="flex flex-col gap-4">
-                <label for=""></label>
+            <form method="post" action="{% url 'services' %}" class="flex flex-col gap-4">
+                {% csrf_token %}
                 <div class="relative">
                     <label class="absolute left-4 top-4" for="input-name">
                         <img src="{% static 'assets/svg/user.svg' %}" alt="Ícone usuário">
@@ -29,20 +56,22 @@
                         src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
                 </div>
                 <div class="relative">
-                    <label class="absolute left-4 top-4" for="input-name">
+                    <label class="absolute left-4 top-4" for="input-duration">
                         <img src="{% static 'assets/svg/clock.svg' %}" alt="Ícone usuário">
                     </label>
-                    <select class="input-with-icon input-name peer service-duration" name="" id=""></select>
+                    <select class="input-with-icon input-name peer service-duration" name="duration" id="input-duration">
+                        <option value="duration" selected disabled>Duração</option>
+                    </select>
                     <img class="absolute top-4 right-4 hidden peer-[.input-error]:block"
                         src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
                     <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block"
                         src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
                 </div>
-                <textarea class="rounded-lg" name="" id="" cols="30" rows="5"
+                <textarea class="rounded-lg" name="description" id="input-description" cols="30" rows="5"
                     placeholder="Informações sobre o seu serviço"></textarea>
                 <button class="button-primary self-end">Adicionar</button>
 
-            </div>
+            </form>
 
         </div>
     </div>

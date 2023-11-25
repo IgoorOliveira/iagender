@@ -60,9 +60,9 @@ const renderCalendar = () =>{
         }
     }
 
-    for (let i = 1; i <= 7 - lastDayIndexMonth - 1; i++) {
+    /*for (let i = 1; i <= 7 - lastDayIndexMonth - 1; i++) {
         days.push(createDayComponent(i, "next-days"));
-    }
+    }*/
 
     days.forEach(day =>{
         calendarDays.appendChild(day)
@@ -81,7 +81,7 @@ function createDayComponent(value, style) {
         }
     }
     day.innerText = value;
-    day.classList.add("cursor-pointer", "flex", "justify-center", "items-center", style);
+    day.classList.add("cursor-pointer", "flex", "justify-center", "items-center", "text-sm", "aspect-1", "p-[2px]", style);
 
     day.addEventListener("click", () =>{
         

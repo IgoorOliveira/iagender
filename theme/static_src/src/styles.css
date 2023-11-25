@@ -35,7 +35,7 @@
     @apply font-semibold
   }
   .today {
-    @apply bg-primary/20 rounded-full text-primary font-semibold p-1 aspect-2;
+    @apply bg-primary/20 rounded-lg text-primary font-semibold p-1 aspect-2;
   }
   
 }
@@ -67,10 +67,7 @@
   background-color: rgba(21, 255, 0, 0.008);
 }
 
-.grid-events {
-  display: grid;
-  grid-template-rows: repeat(24, minmax(calc(100%/8), auto));
-}
+
 
 
 
