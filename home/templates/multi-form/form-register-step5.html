@@ -4,18 +4,18 @@
     <div class="flex flex-col gap-4">
         <div class="flex flex-col gap-4">
             {% for day in days %}
-            <div class="flex flex-col gap-6 border p-4 rounded-lg border-zinc-300 shadow-sm group fields-days show-fields-hours day-open" id="{{day.day}}">
+            <div class="flex flex-col gap-6 border p-4 rounded-lg border-zinc-300 shadow-sm group fields-days show-fields-hours day-open" id="{{day.name}}">
                 <div class="flex justify-between items-center ">
                     <div class="flex gap-4 items-center">
                         <div class="relative inline-block w-12">
-                            <input type="checkbox" id="toggle-day-{{forloop.counter}}" class="hidden toggle-input" name="day" value="{{day.day}}" checked>
+                            <input type="checkbox" id="toggle-day-{{forloop.counter}}" class="hidden toggle-input" name="day" value="{{day.name}}" checked>
                             <label for="toggle-day-{{forloop.counter}}"
                                 class="toggle-label block overflow-hidden h-6 bg-gray-300 rounded-full cursor-pointer bg-primary"></label>
                             <div
                                 class="toggle-handle absolute left-0 top-0 h-6 w-6 bg-white rounded-full shadow-md transform transition-transform ease-in-out duration-300 toggle-checked">
                             </div>
                         </div>
-                        <p>{{day.day}}</p>
+                        <p>{{day.name}}</p>
                     </div>
                     <div class="items-center gap-2 hidden group-[.day-open]:flex">
                         <div>

@@ -2,9 +2,10 @@
 {% load static %}
 {% block head %}
 <script src="{% static 'js/index.js' %}" type="module" defer></script>
-<script src="{% static 'js/authStep2.js' %}" defer></script>
-<script src="{% static 'js/authStep4.js' %}" defer></script>
-<script src="{% static 'js/authStep5.js' %}" defer></script>
+<script src="{% static 'js/authStep2.js' %}" type="module" defer></script>
+<script src="{% static 'js/authStep3.js' %}" type="module" defer></script>
+<script src="{% static 'js/authStep4.js' %}" type="module" defer></script>
+<script src="{% static 'js/authStep5.js' %}" type="module" defer></script>
 {% endblock head %}
 {% block content %}
 <body class="relative flex flex-col min-h-screen bg-cover" style="background-image: url('../../static/assets/home.png');">
@@ -17,7 +18,7 @@
     <main class="flex-1 flex justify-center">
         <div class="w-2/5 flex flex-col gap-6 p-8">
             {% include 'multi-form/title-register-1.html' %}
-            <form method="post" action="{% url 'user' %}" class="w-full h-[95%] flex flex-col">
+            <form method="post" action="{% url 'auth' %}" class="w-full h-[95%] flex flex-col">
                 <div class="hidden flex-1 form-register-step1">
                     {% include 'multi-form/form-register-step1.html' %}
                 </div>

@@ -1,13 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Account(models.Model):
-    name = models.CharField(max_length=100)
-    email = models.EmailField(max_length=320, unique=True)
-    password = models.CharField(max_length=50)
 
-    def __str__(self):
-        return self.name
-    
 
 class Adress(models.Model):
     street = models.CharField(max_length=255)
@@ -30,25 +24,24 @@ class Category(models.Model):
 
 
 class Day(models.Model):
-    day = models.CharField(max_length=20, unique=True)
+    name = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return self.day
+        return self.name
 
 
     
 class Establishment(models.Model):
     company_name = models.CharField(name="company_name", max_length=100, blank=True)
-    user_url = models.CharField(name="user_url", max_length=20)
     phone = models.CharField(max_length=14)
-    account = models.OneToOneField(Account, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="establishment")
     adress = models.OneToOneField(Adress, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category)
     days = models.ManyToManyField(Day, through="EstablishmentDay", related_name="establishment")
     
 
     def __str__(self):
-        return self.user_url
+        return self.company_name
     
 class EstablishmentDay(models.Model):
     name = models.ForeignKey(Establishment, on_delete=models.CASCADE, related_name="establishment_day")
@@ -56,13 +49,13 @@ class EstablishmentDay(models.Model):
     status = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.name.user_url} - {self.day.day} ({self.status})"
+        return f"{self.name.company_name} - {self.day.name} - {'Aberto' if self.status else 'Fechado'}"
     
     
 class Interval(models.Model):
     initial_interval = models.TimeField(max_length=5)
     close_interval = models.TimeField(max_length=5)
-    day = models.ForeignKey(EstablishmentDay, on_delete=models.CASCADE, related_name="days")
+    day = models.ForeignKey(EstablishmentDay, on_delete=models.CASCADE, related_name="intervals")
 
     def __str__(self):
         return f"{self.initial_interval} - {self.close_interval}" 

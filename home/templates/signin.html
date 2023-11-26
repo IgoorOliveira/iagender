@@ -1,5 +1,10 @@
 {% extends 'base.html' %} {% load static %}
 {% block title %}Entrar{% endblock %}
+{% block head %}
+
+<script src="{% static 'js/login.js' %}" defer type="module"></script>
+
+{% endblock head %}
 {% block content %}
 <body class="flex min-h-screen">
   <div class="p-4 w-1/2">
@@ -23,37 +28,47 @@
       </div>
 
       <div class="p-2 w-full flex justify-center gap-4 ">
-        <a href="{% url 'login' %}" class=" text-center text-primary p-2 w-1/2 font-semibold border-b-2 border-primary">Login</a>
+        <a href="{% url 'login_user' %}" class=" text-center text-primary p-2 w-1/2 font-semibold border-b-2 border-primary">Login</a>
         <a href="{% url 'register' %}" class="text-center font-extralight p-2 w-1/2 ">Registre-se</a>
       </div>
-      <form class="w-full flex flex-col gap-4" action="">
+      <form method="post" class="w-full flex flex-col gap-4" action="{% url 'login_user' %}">
+        {% csrf_token %}
         <div class="relative">
           <label class="absolute left-4 top-4" for="input-email">
             <img src="{% static 'assets/svg/mail.svg' %}" alt="Ícone email">
           </label>
 
           <input
-            class="input-with-icon"
+            name="email"
+            id="input-email"
+            class="input-with-icon input-email peer"
             type="email"
             placeholder="Email"
-            id="input-date-bithday"
           />
+          <img class="absolute top-4 right-4 hidden peer-[.input-error]:block" src="{% static 'assets/svg/alert-badge.svg' %}"
+            alt="Ícone de alerta">
+          <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block" src="{% static 'assets/svg/check-badge.svg' %}"
+            alt="Ícone de sucesso">
         </div>
         <div class="relative">
-          <label class="absolute left-4 top-4" for="input-senha">
+          <label class="absolute left-4 top-4" for="input-password">
             <img src="{% static 'assets/svg/lock.svg' %}" alt="Ícone cadeado">
 
           </label>
           <input
-            class="input-with-icon"
+            name="password"
+            id="input-password"
+            class="input-with-icon input-password peer"
             type="password"
             placeholder="Senha"
-            id="input-date-bithday"
+            
           />
+          <img class="absolute top-4 right-4 hidden peer-[.input-error]:block" src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
+          <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block" src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
         </div>
-        <a href="" class="button-primary mt-4 w-full py-4" type="submit">
+        <button class="button-primary mt-4 w-full py-4 login-button" type="submit">
           Entrar
-        </a>
+        </button>
       </form>
       <div class="relative">
         <p class="h-[1px] w-full bg-black"></p>

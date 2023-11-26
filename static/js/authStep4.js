@@ -44,7 +44,13 @@ function clearFields() {
     adress.complement.value = ""
 }
 
-function validateCep() {
+adress.cep.addEventListener("blur", validateCep);
+adress.cep.addEventListener("focus", ()=>{
+    errorAlertCep.innerText = "";
+    adress.cep.classList.remove("input-error");
+})
+
+export function validateCep() {
     adress.cep.value = adress.cep.value.replace(/\D/g, '')
     const regexCep = /^[0-9]{8}$/;
 
@@ -57,11 +63,6 @@ function validateCep() {
         clearFields();
     }
 }
-adress.cep.addEventListener("blur", validateCep);
-adress.cep.addEventListener("focus", ()=>{
-    errorAlertCep.innerText = "";
-    adress.cep.classList.remove("input-error");
-})
 
 export function validateFormAdress() {
     let validate = true

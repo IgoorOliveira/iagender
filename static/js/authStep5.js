@@ -32,7 +32,7 @@ function createSelectTimeComponent(valueStandardSelected) {
     const select = document.createElement("select");
     select.classList.add("rounded-lg", "w-1/2")
     const listOption = []
-    listTime = getTime(0, 23, 15);
+    const listTime = getTime(0, 23, 15);
 
     listTime.forEach(time =>{
         const option = document.createElement("option");

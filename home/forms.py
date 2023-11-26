@@ -1,14 +1,8 @@
 from django import forms
 from django.forms import modelform_factory
 
-from .models import Account, Establishment, Category, Adress, Interval, EstablishmentDay, Service
+from .models import Establishment, Category, Adress, Interval, EstablishmentDay, Service
 
-
-
-class AccountForm(forms.ModelForm):
-    class Meta:
-        model = Account
-        fields = "__all__"
 
 
 class AdressForm(forms.ModelForm):
@@ -19,7 +13,7 @@ class AdressForm(forms.ModelForm):
 class EstablishmentForm(forms.ModelForm):
     class Meta:
         model = Establishment
-        exclude = ['account', 'adress', 'category', 'days']
+        exclude = ['user', 'adress', 'category', 'days']
 
 class CategoryForm(forms.ModelForm):
     class Meta:

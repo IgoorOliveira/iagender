@@ -1,12 +1,4 @@
-
-function validatePhone(phone) {
-    const regexPhone = /^\(\d{2}\) \d{5}-\d{4}$/;
-    return regexPhone.test(phone);
-}
-function validateUserUrl(user) {
-    return user !== "" && user.split(" ").length == 1;
-}
-
+import { validateUserUrl, validatePhone } from "./validate.js";
 function updateStyleInput(typeInput, situation) {
     document.querySelector(`.input-${typeInput}`).classList.add(`input-${situation}`);
 }
