@@ -1,0 +1,68 @@
+{% extends 'settings.html' %}
+{% load static %}
+{% block head %}
+
+
+{% endblock head %}
+{% block section %}
+<section class="flex flex-col gap-8 w-full rounded-lg bg-complement p-8">
+    {% include 'nav-settings.html' %}
+    <div class="flex justify-around items-center gap-2">
+        <div class="flex flex-col gap-2">
+            <h2 class="text-2xl font-semibold">Empresa</h2>
+            <p class="text-zinc-700 text-lg">Adicione ou modifique informações da empresa</p>
+        </div>
+        <form action="" class="flex flex-col gap-4 w-2/5">
+            <div class="flex flex-col gap-4">
+                <div class="flex flex-col gap-2">
+                    <label class="font-semibold" for="input-company">Nome da empresa</label>
+                    <div class="relative">
+                        <label class="absolute left-4 top-4" for="input-company">
+                            <img src="{% static 'assets/svg/company.svg' %}" alt="Ícone telefone">
+                        </label>
+                        <input class="input-with-icon input-company" type="text" placeholder="Nome da empresa (opcional)"
+                            id="input-company" name="company_name" value="{{company.company_name}}">
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-semibold" for="input-username">Username</label>
+                    <div class="relative">
+                        <label class="absolute left-4 top-4" for="input-user">
+                            <img src="{% static 'assets/svg/link.svg' %}" alt="Ícone telefone">
+                        </label>
+                        <input class="input-with-icon input-user peer" type="text"
+                            placeholder="Insira o seu nome de usuário (iagender.com/nome)" id="input-user" name="username"
+                            value="{{user.username}}">
+                        <img class="absolute top-4 right-4 hidden peer-[.input-error]:block"
+                            src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
+                        <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block"
+                            src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
+                    </div>
+        
+                </div>
+                <div class="flex flex-col gap-2">
+                    <label class="font-semibold" for="input-phone">Celular</label>
+                    <div class="relative">
+                        <label class="absolute left-4 top-4" for="input-phone">
+                            <img src="{% static 'assets/svg/phone.svg' %}" alt="Ícone telefone">
+                        </label>
+                        <input class="input-with-icon input-phone peer" type="text" placeholder="Celular" id="input-phone"
+                            name="phone" value="{{company.phone}}">
+                        <img class="absolute top-4 right-4 hidden peer-[.input-error]:block"
+                            src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
+                        <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block"
+                            src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
+                    </div>
+                </div>
+            </div>
+            <div class="w-full flex justify-end items-center gap-6 ">
+                <button type="button" peer class="flex justify-center button-primary next-button group">
+                    <p class="group-[.active-spinner]:hidden">Confirmar</p>
+                    <div
+                        class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

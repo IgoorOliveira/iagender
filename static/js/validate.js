@@ -12,7 +12,6 @@ export function validatePassword(password) {
     return password.match(/^(?=.*[A-Z])(?=.*\d).{8,}$/);
 } 
 
-
 export function validatePhone(phone) {
     const regexPhone = /^\(\d{2}\) \d{5}-\d{4}$/;
     return regexPhone.test(phone);

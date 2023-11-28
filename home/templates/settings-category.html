@@ -1,0 +1,63 @@
+{% extends 'settings.html' %}
+{% load static %}
+{% block head %}
+
+
+{% endblock head %}
+{% block section %}
+<section class="flex flex-col gap-8 w-full h-full rounded-lg bg-complement p-8">
+    {% include 'nav-settings.html' %}
+    <div class="flex-1 flex justify-around items-center gap-2">
+        <div class="flex flex-col gap-2">
+            <h2 class="text-2xl font-semibold">Categoria</h2>
+            <p class="text-zinc-700 text-lg">Deseja alterar a categoria</p>
+        </div>
+        <form action="" class="flex flex-col gap-4 w-1/2 h-full">
+            <div class="relative h-full grid grid-cols-3 grid-rows-2 gap-6">
+        
+                {% for category in categories %}
+
+                    {% if category.category_name == active_category %}
+                        <div class="relative card-category group active-category">
+                            <label for="{{category.id_name}}" class="w-full h-full flex justify-center items-center flex-col gap-2">
+                                <img src="{% static 'assets/svg/categories/category-'|add:category.id_name|add:'.svg' %}"
+                                    alt="Seta para baixo">
+                                <p class="font-semibold group-[.active-category]:text-white">{{category.category_name}}</p>
+                
+                            </label>
+                            <div
+                                class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
+                                <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
+                            </div>
+                            <input name="category_name" class="hidden categories" type="radio" id="{{category.id_name}}"
+                                value="{{category.category_name}}" checked>
+                        </div>
+                    {% else %}
+                        <div class="relative card-category group">
+                            <label for="{{category.id_name}}" class="w-full h-full flex justify-center items-center flex-col gap-2">
+                                <img src="{% static 'assets/svg/categories/category-'|add:category.id_name|add:'.svg' %}" alt="Seta para baixo">
+                                <p class="font-semibold group-[.active-category]:text-white">{{category.category_name}}</p>
+                        
+                            </label>
+                            <div
+                                class="w-4 h-4 p-[3px] bg-zinc-100 absolute top-[.4em] right-[.4em] rounded-sm invisible group-[.active-category]:visible">
+                                <img src="{% static 'assets/svg/check.svg' %}" alt="Ícone check">
+                            </div>
+                            <input name="category_name" class="hidden categories" type="radio" id="{{category.id_name}}"
+                                value="{{category.category_name}}">
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="mt-auto w-full flex justify-end items-center gap-6 ">
+        
+                <button type="button" peer class="flex justify-center button-primary next-button group">
+                    <p class="group-[.active-spinner]:hidden">Confirmar</p>
+                    <div
+                        class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

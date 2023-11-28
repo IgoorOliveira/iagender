@@ -4,9 +4,9 @@ function createHoursIntervalFieldComponent(day) {
     hoursIntervalField.classList.add("w-[90%]", "flex", "items-center", "gap-2")
     const inputOpen = createSelectTimeComponent("09:00")
     const inputClose = createSelectTimeComponent("18:00")
-    const p = document.createElement("p").innerText = "Até"
     inputOpen.name = `initial_interval_${day.toLowerCase()}`
     inputClose.name = `close_interval_${day.toLowerCase()}`
+    const p = document.createElement("p").innerText = "Até"
 
     hoursIntervalField.append(inputOpen, p, inputClose);
     return hoursIntervalField
@@ -74,10 +74,10 @@ function createAddFieldsIcon() {
 function createTrashIcon(){
     const icon = document.createElement("img");
     icon.src = `../static/assets/svg/trash.svg`
-    icon.style.cursor = "pointer"
+    icon.classList.add("cursor-pointer", "remove-fields")
 
     icon.addEventListener("click", () =>{
-        row = icon.parentNode
+        const row = icon.parentNode
         row.remove()
     })
     return icon;
@@ -133,17 +133,27 @@ function toggleFieldsHours(button) {
     box.classList.toggle("show-fields-hours");
 }
 
+const addFieldsButtons = document.querySelectorAll(".add-fields");
+const removeFieldsButtons = document.querySelectorAll(".remove-fields");
 
-document.addEventListener("DOMContentLoaded", () =>{
-    const fieldsHours = document.querySelectorAll(".fields-hours");
-    fieldsHours.forEach(field =>{
-        const row = document.createElement("div");
-        row.classList.add("flex", "justify-between");
-        const day = field.closest(".fields-days").id
-        console.log(day)
-        const intervalComponent = createHoursIntervalFieldComponent(day);
-        const addFieldsIcon = createAddFieldsIcon();
-        row.append(intervalComponent, addFieldsIcon);
-        field.append(row)
+for (const addFieldsButton of addFieldsButtons) {
+    addFieldsButton.addEventListener("click", () =>{
+        const day = addFieldsButton.closest(".fields-days").id
+        const rowFields = createRowFieldsComponent(day);
+        const fieldHours = addFieldsButton.closest('.fields-hours');
+        fieldHours.append(rowFields);
     })
-})
+}
+
+for (const removeFieldsButton of removeFieldsButtons) {
+    removeFieldsButton.addEventListener("click", () =>{
+        const row = removeFieldsButton.parentNode;
+        row.remove()
+    })
+}
+
+
+
+
+
+
