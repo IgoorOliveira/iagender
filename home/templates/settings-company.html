@@ -12,7 +12,8 @@
             <h2 class="text-2xl font-semibold">Empresa</h2>
             <p class="text-zinc-700 text-lg">Adicione ou modifique informações da empresa</p>
         </div>
-        <form action="" class="flex flex-col gap-4 w-2/5">
+        <form action="{% url 'update_company' %}" method="post" class="flex flex-col gap-4 w-2/5">
+            {% csrf_token %}
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
                     <label class="font-semibold" for="input-company">Nome da empresa</label>
@@ -56,7 +57,7 @@
                 </div>
             </div>
             <div class="w-full flex justify-end items-center gap-6 ">
-                <button type="button" peer class="flex justify-center button-primary next-button group">
+                <button type="submit" peer class="flex justify-center button-primary confirm-button group">
                     <p class="group-[.active-spinner]:hidden">Confirmar</p>
                     <div
                         class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">

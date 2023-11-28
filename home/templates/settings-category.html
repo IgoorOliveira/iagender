@@ -12,7 +12,8 @@
             <h2 class="text-2xl font-semibold">Categoria</h2>
             <p class="text-zinc-700 text-lg">Deseja alterar a categoria</p>
         </div>
-        <form action="" class="flex flex-col gap-4 w-1/2 h-full">
+        <form action="{% url 'update_category' %}" method="post" class="flex flex-col gap-4 w-1/2 h-full">
+            {% csrf_token %}
             <div class="relative h-full grid grid-cols-3 grid-rows-2 gap-6">
         
                 {% for category in categories %}
@@ -51,7 +52,7 @@
             </div>
             <div class="mt-auto w-full flex justify-end items-center gap-6 ">
         
-                <button type="button" peer class="flex justify-center button-primary next-button group">
+                <button type="submit" peer class="flex justify-center button-primary confirm-button group">
                     <p class="group-[.active-spinner]:hidden">Confirmar</p>
                     <div
                         class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">

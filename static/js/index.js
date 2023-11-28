@@ -1,7 +1,7 @@
-import {validateFormUser} from "./authStep1.js";
-import {validateFormCompany} from "./authStep2.js";
-import {validateFormCategories} from "./authStep3.js";
-import {validateFormAdress} from "./authStep4.js";
+import {validateFormUser} from "./user.js";
+import {validateFormCompany} from "./company.js";
+import {validateFormCategories} from "./category.js";
+import {validateFormAdress} from "./address.js";
 
 const nextButtons = document.querySelectorAll(".next-button");
 const backButtons = document.querySelectorAll(".back-button");

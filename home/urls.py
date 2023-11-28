@@ -10,13 +10,14 @@ urlpatterns = [
     path('services/', views.get_services, name="services"),
     path('operating_days/', views.get_operating_days, name="operating_days"),
     path('settings/', views.get_settings, name="settings"),
-    path('settings/profile', views.get_settings_profile, name="settings_profile"),
-    path('settings/company', views.get_settings_company, name="settings_company"),
-    path('settings/category', views.get_settings_category, name="settings_category"),
-    path('settings/address', views.get_settings_address, name="settings_address"),
+    path('settings/profile', views.update_profile, name="update_profile"),
+    path('settings/company', views.update_company, name="update_company"),
+    path('settings/category', views.update_category, name="update_category"),
+    path('settings/address', views.update_address, name="update_address"),
     path('settings/schedule', views.get_settings_schedule, name="settings_schedule"),
     path('settings/schedule/update', views.update_schedule, name="update_schedule"),
-    path('settings/schedule/delete/<int:id>/', views.delete_interval, name="delete_interval")
+    path('settings/schedule/delete/<int:id>/', views.delete_interval, name="delete_interval"),
+    path('/<str:username>/'.views.get_page, name="get_page")
 
 
 ]

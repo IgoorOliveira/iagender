@@ -12,7 +12,8 @@
         <h2 class="text-2xl font-semibold">Endereço</h2>
         <p class="text-zinc-700 text-lg">Modifique informações de localização</p>
     </div>
-    <form action="" class="flex flex-col gap-4 w-1/2">
+    <form action="{% url 'update_address' %}" method="post" class="flex flex-col gap-4 w-1/2">
+        {% csrf_token %}
         <div class="flex flex-col gap-4">
             <div class="flex gap-4 items-center">
                 <input class="rounded-lg w-1/3 p-3 shadow-lg  input-cep" type="text" placeholder="CEP" max="9" name="cep"
@@ -41,7 +42,7 @@
     
         </div>
         <div class="mt-auto w-full flex justify-end items-center gap-6 ">
-            <button type="button" peer class="flex justify-center button-primary next-button group">
+            <button type="submit" peer class="flex justify-center button-primary confirm-button group">
                 <p class="group-[.active-spinner]:hidden">Confirmar</p>
                 <div
                     class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">

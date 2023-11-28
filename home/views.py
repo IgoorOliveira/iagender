@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
 from .utils import remove_mask_phone, create_operating_days, validate_form, get_categories, get_days, get_profile, get_establishment, get_address, get_category, get_schedule, get_time
 from django.http import HttpResponse, JsonResponse
 from .models import Category, Adress, Day, Interval, Establishment, EstablishmentDay
-from .forms import EstablishmentForm, AdressForm, ServiceForm
+from .forms import EstablishmentForm, AdressForm, ServiceForm, CategoryForm
 
 def index(request):
     return render(request, 'index.html')
@@ -21,11 +22,10 @@ def login_user(request):
         password = request.POST["password"]
         username = User.objects.get(email=email).username
 
-        a = authenticate(username=username, password=password)
-        print(email, password)
-        print(a)
-        if a is not None:
-            login(request, a)
+        user = authenticate(username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
             return redirect("/dashboard")
         else:
             return redirect("/login")
@@ -75,7 +75,7 @@ def get_user(request):
                 create_operating_days(request, establishment_instance, operating_days)
 
                 establishment_instance.category.add(Category.objects.get(category_name=category_name))
-                return redirect('dashboard')
+                return redirect('dashboard/')
 
         return redirect("/")
     else:
@@ -131,24 +131,49 @@ def get_settings(request):
         return render(request, "settings.html", context)
     
 @login_required
-def get_settings_profile(request):
+def update_profile(request):
     context = {
         "user": get_profile(request.user)
     }
     if request.method == 'GET':
         return render(request, "settings-profile.html", context)
+    else:
+        user = request.user
+        name = request.POST.get("name").split()
+        email = request.POST.get("email")
+
+        first_name = name[0]
+        last_name = name[-1]
+
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.save()
+        return redirect("/settings/profile")
     
 @login_required
-def get_settings_company(request):
+def update_company(request):
     context = {
         "user": get_profile(request.user),
         "company": get_establishment(request.user)
     }
     if request.method == 'GET':
         return render(request, "settings-company.html", context)
+    else:
+        user = request.user
+        form = EstablishmentForm(request.POST.copy(), instance=user.establishment)
+
+        if "phone" in form.data:
+            form.data['phone'] = remove_mask_phone(form.data['phone'])
+
+        if form.is_valid():
+            user.username = request.POST.get("username")
+            user.save()
+            form.save()
+        return redirect("/settings/company")
     
 @login_required
-def get_settings_category(request):
+def update_category(request):
     category = get_category(request.user).category_name
     context = {
         "categories": get_categories(),
@@ -156,14 +181,30 @@ def get_settings_category(request):
     }
     if request.method == 'GET':
         return render(request, "settings-category.html", context)
+    else:
+        establishment = request.user.establishment
+        category = Category.objects.get(establishment=establishment)
+        establishment.category.set(request.POST.get("category_name"))
+        
+
+        return redirect("/settings/category")
     
 @login_required
-def get_settings_address(request):
+def update_address(request):
     context = {
         "address": get_address(request.user)
     }
     if request.method == 'GET':
         return render(request, "settings-address.html", context)
+    else:
+        establishment = request.user.establishment
+        form = AdressForm(request.POST, instance=establishment.adress)
+
+        if form.is_valid():
+            form.save()
+
+        return redirect("/settings/address")
+        
     
 @login_required
 def get_settings_schedule(request):
@@ -224,6 +265,12 @@ def delete_interval(request, id):
     if request.method == "GET":
         Interval.objects.get(id=id).delete()
     return redirect("/settings/schedule")
+
+
+def get_page(request):
+    if request.method == "GET":
+        return render("page-profissional.html")
+
         
 
 
