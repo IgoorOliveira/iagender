@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head %}
+<script src="{% static 'js/calendar.js' %}" defer type="module"></script>
+
+{% endblock head %}
+{% block content %}
+<div class="flex flex-col justify-center items-center w-full h-screen bg-complement">
+    <header class="w-full flex justify-center items-center bg-complement px-12 py-6">
+        <h1 class="text-2xl font-bold"><a href="{{'/'}}"><span class="text-primary">I</span>AGENDER</a></h1>
+    </header>
+    <main class="w-full flex-1 flex justify-center">
+        <div
+            class="w-2/3 h-[90%] bg-complement rounded-lg overflow-hidden border border-zinc-950/20 shadow-md">
+            {% block page %}
+            {% endblock %}
+        </div>
+    </main>
+
+</div>
+
+{% endblock %}

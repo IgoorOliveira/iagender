@@ -9,8 +9,8 @@ def remove_mask_phone(phone):
 
 def mask_phone(phone):
     number = ''.join(c for c in phone if c.isdigit())
-    padrao = re.compile(r'(\d{2})(\d{5})(\d{4})')
-    mask_phone = padrao.sub(r'(\1) \2-\3', number)
+    standard = re.compile(r'(\d{2})(\d{5})(\d{4})')
+    mask_phone = standard.sub(r'(\1) \2-\3', number)
     return mask_phone
 
 def validate_form(request, formModel):

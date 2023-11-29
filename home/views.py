@@ -92,7 +92,11 @@ def logout_user(request):
 def dashboard(request):
     if request.method == "GET":
         return render(request, "dashboard.html")
-        
+
+@login_required
+def schedule(request):
+    if request.method == "GET":
+        return render(request, "schedule.html")      
 
 @login_required
 def get_operating_days(request):
@@ -129,6 +133,11 @@ def get_settings(request):
     }
     if request.method == "GET":
         return render(request, "settings.html", context)
+    else:
+        form = ServiceForm(request.POST)
+
+        if form.is_valid():
+            form.save()
     
 @login_required
 def update_profile(request):
@@ -269,7 +278,16 @@ def delete_interval(request, id):
 
 def get_page(request):
     if request.method == "GET":
-        return render("page-profissional.html")
+        return render(request, "page-profissional.html")
+    
+def teste_date(request):
+    if request.method == "GET":
+        return render(request, "page-date.html")
+
+
+def teste_user(request):
+    if request.method == "GET":
+        return render(request, "page-user.html")
 
         
 
