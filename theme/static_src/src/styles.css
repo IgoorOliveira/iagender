@@ -28,16 +28,16 @@
   .turn-arrow {
     @apply rotate-180 transition-all duration-300
   }
+  .day {
+    @apply relative cursor-pointer flex justify-center items-center text-sm aspect-1 p-[2px]
+  }
   .prev-days, .next-days {
     @apply text-zinc-500
   }
   .current-days {
-    @apply font-semibold
+    @apply bg-primary/20 rounded-lg text-primary font-semibold p-1 aspect-2
   }
-  .today {
-    @apply bg-primary/20 rounded-lg text-primary font-semibold p-1 aspect-2;
-  }
-  
+
 }
 .animation-progress-bar {
   animation: slide 0.5s normal;
@@ -65,6 +65,16 @@
 .input-sucess {
   border: 1px solid rgb(21, 255, 0);
   background-color: rgba(21, 255, 0, 0.008);
+}
+.today {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  bottom: 0;
+  left: 50%;
+
 }
 
 

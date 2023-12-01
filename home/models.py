@@ -59,6 +59,14 @@ class Interval(models.Model):
 
     def __str__(self):
         return f"{self.initial_interval} - {self.close_interval}" 
+
+class Client(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
     
 class Service(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -66,7 +74,24 @@ class Service(models.Model):
     duration = models.DurationField()
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, related_name="services")
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, 
+    related_name="services")
+    
 
     def __str__(self):
         return f"{self.name} - {self.establishment}"
+    
+
+class Schedules(models.Model):
+
+    date = models.DateField()
+    initial_hour = models.TimeField()
+    end_hour = models.TimeField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE, related_name="schedules")
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name="schedules")
+    establishment = models.ForeignKey(Establishment, on_delete=models.CASCADE, related_name="schedules")
+
+    def __str__(self):
+        return f"{self.date} - {self.initial_hour} - {self.end_hour}"
+

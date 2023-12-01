@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
+from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
-from .utils import remove_mask_phone, create_operating_days, validate_form, get_categories, get_days, get_profile, get_establishment, get_address, get_category, get_schedule, get_time
+from .utils import remove_mask_phone, create_operating_days, validate_form, get_categories, get_days, get_profile, get_establishment, get_address, get_category, get_schedule, get_time, get_available_hour
 from django.http import HttpResponse, JsonResponse
-from .models import Category, Adress, Day, Interval, Establishment, EstablishmentDay
+from .models import Category, Adress, Day, Interval, Establishment, EstablishmentDay, Schedules, Client, Service
 from .forms import EstablishmentForm, AdressForm, ServiceForm, CategoryForm
+from urllib.parse import urlencode
+from datetime import date, timedelta
 
 def index(request):
     return render(request, 'index.html')
@@ -20,15 +23,18 @@ def login_user(request):
     else:
         email = request.POST["email"]
         password = request.POST["password"]
-        username = User.objects.get(email=email).username
-
-        user = authenticate(username=username, password=password)
+        user = User.objects.get(email=email)
         
+
+        if user is not None:
+            user = authenticate(username=user.username, password=password)
+        else:
+            return redirect("login")
         if user is not None:
             login(request, user)
-            return redirect("/dashboard")
+            return redirect("dashboard")
         else:
-            return redirect("/login")
+            return redirect("login")
 
 
 def get_user(request):
@@ -75,7 +81,7 @@ def get_user(request):
                 create_operating_days(request, establishment_instance, operating_days)
 
                 establishment_instance.category.add(Category.objects.get(category_name=category_name))
-                return redirect('dashboard/')
+                return redirect('dashboard')
 
         return redirect("/")
     else:
@@ -98,18 +104,41 @@ def schedule(request):
     if request.method == "GET":
         return render(request, "schedule.html")      
 
-@login_required
-def get_operating_days(request):
-    context = {}
-    list_operating_days = []
-    if request.method == "GET":
-        establishment_instance = request.user.establishment
-        establishment_days = EstablishmentDay.objects.filter(name_id=establishment_instance, status=True).select_related("name")
-        for establishment_day in establishment_days:
-            day_name = establishment_day.day.name
-            list_operating_days.append(day_name)
-        context["operating_days"] = list_operating_days
+
+def get_operating_days(request, username, service, year, month):
+    context = {
+        "avalaible_days": []
+    }
+    day_en_ptbr = {
+        "Monday": "Segunda",
+        "Tuesday": "Terça",
+        "Wednesday": "Quarta",
+        "Thursday": "Quinta",
+        "Friday": "Sexta",
+        "Saturday": "Sábado",
+        "Sunday": "Domingo"
+    }
+    user = User.objects.get(username=username)
+    establishment = user.establishment
+    service_instance = Service.objects.get(name=service)
+
+    days = EstablishmentDay.objects.filter(name=establishment, status=True)
+    available_day_week = [day.day.name for day in days]
+
+    last_day_month = (date(year, month + 1, 1) - timedelta(days=1)).day
+
+    for day in range(1, last_day_month + 1):
+        
+        day_week = date(year, month, day).strftime("%A")
+
+        if day_en_ptbr[day_week] in available_day_week:
+            day_instance = Day.objects.get(name=day_en_ptbr[day_week])
+            establishment_day = EstablishmentDay.objects.get(name=establishment, day=day_instance)
+            intervals = establishment_day.intervals.all()
+
+            context[day] = get_available_hour(service_instance, establishment, intervals, year, month, day)
     return JsonResponse(context)
+
 
 @login_required
 def get_services(request):
@@ -276,21 +305,34 @@ def delete_interval(request, id):
     return redirect("/settings/schedule")
 
 
-def get_page(request):
-    if request.method == "GET":
-        return render(request, "page-profissional.html")
-    
-def teste_date(request):
-    if request.method == "GET":
-        return render(request, "page-date.html")
-
-
-def teste_user(request):
-    if request.method == "GET":
-        return render(request, "page-user.html")
-
+def get_page(request, username):
+    user = User.objects.get(username=username)
+    if user:
+        context = {
+             "user": {
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "username": user.username,
+            },
+            "address": user.establishment.adress,
+            "services": user.establishment.services.all(),
+        }
         
 
+    if request.method == "GET":
+        return render(request, "page-profissional.html", context=context)
+    
+def page_hours(request):
+    context: {
+        
+    }
+    if request.method == "GET":
+
+        return render(request, "page-date.html")
+
+def teste_user(request):
+    print("a")
+        
 
 
 

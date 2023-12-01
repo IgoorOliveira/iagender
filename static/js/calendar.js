@@ -72,16 +72,21 @@ const renderCalendar = () =>{
 
 
 function createDayComponent(value, style) {
-    const day = document.createElement("button");
-    if(style == "current-days" || style == "today") {
+    const day = document.createElement("a");
+    if(style == "current-days") {
         const index = new Date(date.getFullYear(), date.getMonth(), value).getDay()
         
         if(operating_days.includes(index)) {
-            day.classList.add("today");
+            day.classList.add("current-days");
         }
+        day.href = `date=${date.getFullYear().toString()}-${date.getMonth().toString()}-${date.getDate().toString()}`
+
+    } else if(style == "today") {
+        day.classList.add("today")
     }
+
     day.innerText = value;
-    day.classList.add("cursor-pointer", "flex", "justify-center", "items-center", "text-sm", "aspect-1", "p-[2px]", style);
+    day.classList.add("day");
 
     day.addEventListener("click", () =>{
         

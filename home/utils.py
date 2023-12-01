@@ -1,8 +1,8 @@
 import re
 
-from .models import Day, Category, Interval, Establishment, EstablishmentDay
+from .models import Day, Category, Interval, Establishment, EstablishmentDay, Schedules
 from django.contrib.auth.models import User
-from datetime import datetime
+from datetime import datetime, timedelta, date
 def remove_mask_phone(phone):
     dig = [char for char in phone if char.isdigit()]
     return ''.join(dig)
@@ -100,9 +100,45 @@ def get_time(initial_hour, final_hour, interval_min):
     return list_time
 
 
+def get_available_hour(service, establishment, intervals, year, month, day):
+    available_hours= []
+    available_hours_with_service = []
+    occupied_times = []
+    initial_end_hour = {}
+    format = "%H:%M"
 
+    schedules = Schedules.objects.filter(date=date(year, month, day), establishment=establishment).order_by("initial_hour")
 
+    for schedule in schedules:
+        initial_end_hour[schedule.initial_hour.strftime(format)] = schedule.end_hour
 
+    for interval in intervals:
+        initial_hour = datetime.strptime(interval.initial_interval.strftime(format), format).time()
+        end_hour = datetime.strptime(interval.close_interval.strftime(format), format).time()
+        current_hour = initial_hour
 
-      
+        while current_hour <= end_hour:
+            current_hour_str = current_hour.strftime(format)
+            
+            if initial_end_hour.get(current_hour_str) is not None:
+                while current_hour < datetime.combine(datetime.today(), initial_end_hour[current_hour_str]).time():
+                    occupied_times.append(current_hour.strftime(format))
+                    current_hour = (datetime.combine(datetime.today(), current_hour) + timedelta(minutes=15)).time()
+                
+            else:
+                available_hours.append(current_hour_str)
+                current_hour = (datetime.combine(datetime.today(), current_hour) + timedelta(minutes=15)).time()
+    
+    for available_hour in available_hours:
+        end_time_with_service = (datetime.strptime(available_hour, format) + timedelta(minutes=service.duration.total_seconds() / 60)).strftime(format)
+    
+        if end_time_with_service not in occupied_times:
+            available_hours_with_service.append(available_hour)
+        elif (datetime.strptime(end_time_with_service, format) - timedelta(minutes=15)).strftime(format) not in occupied_times:
+            available_hours_with_service.append((datetime.strptime(end_time_with_service, format) - timedelta(minutes=service.duration.total_seconds()/60)).strftime(format))
+   
+    return available_hours_with_service
+
+        
+
 
