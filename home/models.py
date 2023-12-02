@@ -69,7 +69,8 @@ class Client(models.Model):
 
     
 class Service(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True)
     description = models.TextField()
     duration = models.DurationField()
     created_at = models.DateTimeField(auto_now_add=True)

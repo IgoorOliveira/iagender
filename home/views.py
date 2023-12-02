@@ -4,12 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, logout, login
-from .utils import remove_mask_phone, create_operating_days, validate_form, get_categories, get_days, get_profile, get_establishment, get_address, get_category, get_schedule, get_time, get_available_hour
+from .utils import remove_mask_phone, create_operating_days, validate_form, get_categories, get_days, get_profile, get_establishment, get_address, get_category, get_schedule, get_time, get_available_hour, format_duration
 from django.http import HttpResponse, JsonResponse
 from .models import Category, Adress, Day, Interval, Establishment, EstablishmentDay, Schedules, Client, Service
-from .forms import EstablishmentForm, AdressForm, ServiceForm, CategoryForm
+from .forms import EstablishmentForm, AdressForm, ServiceForm, CategoryForm, ClientForm
 from urllib.parse import urlencode
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 
 def index(request):
     return render(request, 'index.html')
@@ -105,39 +105,46 @@ def schedule(request):
         return render(request, "schedule.html")      
 
 
-def get_operating_days(request, username, service, year, month):
-    context = {
-        "avalaible_days": []
-    }
-    day_en_ptbr = {
-        "Monday": "Segunda",
-        "Tuesday": "Terça",
-        "Wednesday": "Quarta",
-        "Thursday": "Quinta",
-        "Friday": "Sexta",
-        "Saturday": "Sábado",
-        "Sunday": "Domingo"
-    }
-    user = User.objects.get(username=username)
-    establishment = user.establishment
-    service_instance = Service.objects.get(name=service)
+def get_operating_days(request, username, service, date_url):
 
-    days = EstablishmentDay.objects.filter(name=establishment, status=True)
-    available_day_week = [day.day.name for day in days]
 
-    last_day_month = (date(year, month + 1, 1) - timedelta(days=1)).day
+    if request.method == "GET":
+        context = {
+            "operating_days": {}
+        }
+        day_en_ptbr = {
+            "Monday": "Segunda",
+            "Tuesday": "Terça",
+            "Wednesday": "Quarta",
+            "Thursday": "Quinta",
+            "Friday": "Sexta",
+            "Saturday": "Sábado",
+            "Sunday": "Domingo"
+        }
+        year, month = [int(i) for i in date_url.split("-")]
 
-    for day in range(1, last_day_month + 1):
-        
-        day_week = date(year, month, day).strftime("%A")
 
-        if day_en_ptbr[day_week] in available_day_week:
-            day_instance = Day.objects.get(name=day_en_ptbr[day_week])
-            establishment_day = EstablishmentDay.objects.get(name=establishment, day=day_instance)
-            intervals = establishment_day.intervals.all()
+        user = User.objects.get(username=username)
+        establishment = user.establishment
+        service_instance = Service.objects.get(slug=service)
 
-            context[day] = get_available_hour(service_instance, establishment, intervals, year, month, day)
-    return JsonResponse(context)
+        days = EstablishmentDay.objects.filter(name=establishment, status=True)
+        available_day_week = [day.day.name for day in days]
+
+        first_day_next_month = date(year, month, 1) + timedelta(days=32)
+        last_day_month = (first_day_next_month.replace(day=1) - timedelta(days=1)).day
+
+        for day in range(1, last_day_month + 1):
+            
+            day_week = date(year, month, day).strftime("%A")
+
+            if day_en_ptbr[day_week] in available_day_week:
+                day_instance = Day.objects.get(name=day_en_ptbr[day_week])
+                establishment_day = EstablishmentDay.objects.get(name=establishment, day=day_instance)
+                intervals = establishment_day.intervals.all()
+
+                context["operating_days"][day] = get_available_hour(service_instance, establishment, intervals, year, month, day)
+        return JsonResponse(context)
 
 
 @login_required
@@ -307,31 +314,125 @@ def delete_interval(request, id):
 
 def get_page(request, username):
     user = User.objects.get(username=username)
+    
     if user:
         context = {
-             "user": {
+            "user": {
                 "first_name": user.first_name,
                 "last_name": user.last_name,
                 "username": user.username,
             },
             "address": user.establishment.adress,
             "services": user.establishment.services.all(),
+            "date": datetime.now().strftime('%Y-%m')
         }
-        
+    
 
     if request.method == "GET":
         return render(request, "page-profissional.html", context=context)
     
-def page_hours(request):
-    context: {
-        
+
+def get_details_date(request, username, service, date):
+    
+    if request.method == "GET":
+        return render(request, "page-date.html")
+    
+def get_client(request, username, service, date_url, time):
+    year, month, day = [int(i) for i in date_url.split("-")]
+    date_instance = date(year, month, day)
+
+    day_en_ptbr = {
+        "Monday": "Segunda-feira",
+        "Tuesday": "Terça-feira",
+        "Wednesday": "Quarta-feira",
+        "Thursday": "Quinta-feira",
+        "Friday": "Sexta-feira",
+        "Saturday": "Sábado",
+        "Sunday": "Domingo"
+    }
+
+    name_month = {
+        1: "janeiro",
+        2: "fevereiro",
+        3: "março",
+        4: "abril",
+        5: "maio",
+        6: "junho",
+        7: "julho",
+        8: "agosto",
+        9: "setembro",
+        10: "outubro",
+        11: "novembro",
+        12: "dezembro"
     }
     if request.method == "GET":
 
-        return render(request, "page-date.html")
 
-def teste_user(request):
-    print("a")
+        service_instance = Service.objects.get(slug=service)
+        service_name = service_instance.name
+        service_duration = format_duration(service_instance.duration)
+
+
+        date_schedule = f"{day_en_ptbr[date_instance.strftime('%A')]}, {day} de {name_month[month]} de {year}"
+
+        context = {
+            "username": username,
+            "service": service,
+            "date_url": date_url,
+            "time": time,
+            "service_name": service_name,
+            "service_duration": service_duration,
+            "date_schedule": date_schedule
+        }
+
+        return render(request, "page-client.html", context=context)
+    else:
+        user = User.objects.get(username=username)
+        service_instance = Service.objects.get(slug=service)
+        if user:
+
+            form_client = validate_form(request.POST, ClientForm)
+            
+
+            if form_client.is_valid():
+                client_instance = None
+                client = Client.objects.filter(email=request.POST.get("email")).first()
+                if client is not None:
+                    client_instance = client
+                else:
+                    client_instance = form_client.save()
+
+                hours, remainder = divmod(service_instance.duration.total_seconds(), 3600)
+                minutes, _ = divmod(remainder, 60)
+
+                initial_hour_datetime = datetime.strptime(time, "%H:%M")
+                end_hour_datetime = initial_hour_datetime + timedelta(hours=int(hours)) + timedelta(minutes=int(minutes))
+
+                schedule = Schedules.objects.create(
+                    date = date_instance,
+                    initial_hour = initial_hour_datetime,
+                    end_hour = end_hour_datetime,
+                    client = client,
+                    service = service_instance,
+                    establishment = user.establishment
+                )
+                schedule.save()
+
+                url = reverse("get_page", args=[username])
+            else:
+                return HttpResponse(form_client.errors)
+        else:
+            return HttpResponse("user não encontrado")
+        
+        url = reverse("get_page", args=[username])
+        return redirect(url)
+
+    
+
+    
+
+
+
         
 
 

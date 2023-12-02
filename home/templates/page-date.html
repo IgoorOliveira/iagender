@@ -7,8 +7,8 @@
 {% block page %}
 
 <div class="w-full h-full p-8 grid grid-cols-2">
-    <div class="flex flex-col gap-4">
-        <div class="flex gap-2 items-center">
+    <div class="flex flex-col items-center gap-8">
+        <div class=" w-full flex gap-2 items-center">
             <img class="w-20 h-20 rounded-full" src="{% static 'assets/foto_github.png' %}" alt="">
             <p class="font-semibold text-lg">Igor Oliveira</p>
     
@@ -38,20 +38,10 @@
         </div>
     </div>
     <div class="flex flex-col gap-4 border-l p-4">
-        <h3 class="font-semibold text-lg">28 de novembro de 2023</h3>
-        <div class="flex gap-2 flex-wrap">
-            <div class="flex gap-2 w-fit px-6 py-3 border border-primary rounded-lg cursor-pointer">
-                <img src="{% static 'assets/svg/sun.svg' %}" alt="">
-                <p>08:00</p>
-            </div>
-            <div class="flex gap-2 w-fit px-6 py-3 border border-primary rounded-lg cursor-pointer">
-                <img src="{% static 'assets/svg/moon.svg' %}" alt="">
-                <p>16:00</p>
-            </div>
+        <h3 class="font-semibold text-lg day-title">28 de novembro de 2023</h3>
+        <div class="h-[400px] flex justify-center gap-4 flex-wrap time-container overflow-y-auto p-4">
+            
         </div>
-    
-    
-    
     </div>
 </div>
 {% endblock %}

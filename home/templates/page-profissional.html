@@ -1,7 +1,7 @@
 {% extends 'user-base.html' %}
 {% load static %}
 {% block head %}
-
+<script src="{% static 'js/professional.js' %}" defer type="module"></script>
 
 {% endblock head %}
 {% block page %}
@@ -34,7 +34,7 @@
       {% if services %}
          <div class="w-full flex-1 grid grid-rows-3 grid-cols-2 gap-4 -ml-20 ">
             {% for service in services %}
-               <a href="" class="flex bg-complement border border-zinc-950/20 shadow-md rounded-lg overflow-hidden cursor-pointer hover:scale-[102%] duration-100">
+               <a href="{% url 'get_date' username=user.username service=service.slug date=date %}" class="flex bg-complement border border-zinc-950/20 shadow-md rounded-lg overflow-hidden cursor-pointer hover:scale-[102%] duration-100 button-service">
                   <div class="w-1/5 flex flex-col gap-2 px-4 justify-center items-center h-full bg-primary">
                      <p class="text-zinc-50">{{service.duration}}m</p>
                      <svg xmlns="http://www.w3.org/2000/svg" 

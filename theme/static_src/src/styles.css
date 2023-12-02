@@ -29,13 +29,19 @@
     @apply rotate-180 transition-all duration-300
   }
   .day {
-    @apply relative cursor-pointer flex justify-center items-center text-sm aspect-1 p-[2px]
+    @apply cursor-pointer flex justify-center items-center text-sm aspect-1 p-[2px]
   }
   .prev-days, .next-days {
     @apply text-zinc-500
   }
   .current-days {
-    @apply bg-primary/20 rounded-lg text-primary font-semibold p-1 aspect-2
+    @apply font-medium;
+  }
+  .operating-day {
+    @apply bg-primary/20 rounded-lg text-primary font-semibold;
+  }
+  .time-button {
+    @apply flex gap-2 w-fit px-6 py-3 border border-primary rounded-lg duration-150 cursor-pointer hover: bg primary/20;
   }
 
 }
@@ -76,6 +82,14 @@
   left: 50%;
 
 }
+
+
+
+
+.time-container::-webkit-scrollbar {
+    display: none;
+}
+
 
 
 

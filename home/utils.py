@@ -139,6 +139,16 @@ def get_available_hour(service, establishment, intervals, year, month, day):
    
     return available_hours_with_service
 
+def format_duration(duration):
+
+    hours, remainder = divmod(duration.total_seconds(), 3600)
+    minutes, _ = divmod(remainder, 60)
+    if hours > 0:
+        return f"{int(hours)}h{str(int(minutes)).zfill(2)}"
+    else:
+        return f"{str(int(minutes)).zfill(2)}m"
+
+
         
 
 

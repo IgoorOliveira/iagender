@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import modelform_factory
 
-from .models import Establishment, Category, Adress, Interval, EstablishmentDay, Service
+from .models import Establishment, Category, Adress, Interval, EstablishmentDay, Service, Schedules, Client
 
 
 
@@ -34,6 +34,13 @@ class ServiceForm(forms.ModelForm):
     class Meta:
         model = Service
         fields = ["name", "duration", "description"]
+
+class ClientForm(forms.ModelForm):
+    class Meta:
+        model = Client
+        fields = "__all__"
+
+
 
 
 
