@@ -13,7 +13,7 @@
             <div class="flex-1 relative flex flex-col items-center gap-2 p-8 bg-complement overflow-hidden rounded-lg h-[520px] overflow-y-scroll service-container">
                 {% for service in services %}
                     <button
-                        class="w-[90%] flex bg-complement border border-zinc-950/20 shadow-md rounded-lg overflow-hidden cursor-pointer group hover:scale-[102%] duration-100 button-service">
+                        class="w-[90%] flex bg-complement border border-zinc-950/20 shadow-md rounded-lg overflow-hidden cursor-pointer group duration-150 button-service">
                         <div class="w-1/5 flex flex-col gap-2 px-4 justify-center items-center h-full bg-primary">
                             <p class="text-zinc-50">{{service.duration}}m</p>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -23,12 +23,12 @@
                                 <polyline points="12 6 12 12 16 14" />
                             </svg>
                         </div>
-                        <div class="flex-1 flex justify-between items-center pr-8">
-                            <div class="flex-1 p-4">
+                        <div class="flex-1 flex justify-between items-center p-4">
+                            <div class="flex flex-col items-start">
                                 <p class="font-medium text-lg">{{service.name}}</p>
                                 <p class="text-zinc-700">{{service.description}}</p>
                             </div>
-                            <a href="{% url 'delete_service' service.id %}" class="bg-red-600 rounded-lg aspect-1 duration-150 invisible group-hover:visible">
+                            <a href="{% url 'delete_service' service.id %}" class="bg-red-400 rounded-lg aspect-1 duration-150 invisible group-hover:visible">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                     class="lucide lucide-trash-2 stroke-white p-2">

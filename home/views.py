@@ -124,7 +124,16 @@ def schedule(request, date_url):
         }
 
         return render(request, "schedule.html", context=context)      
-
+@login_required
+def delete_schedule(request, id):
+    if request.method == "GET":
+        schedule = Schedules.objects.filter(id=id).first()
+        if schedule:
+            schedule_date = schedule.date
+            schedule.delete()
+            return redirect(f'/schedule/{schedule_date}')
+        else:
+            return redirect(f"dashboard")
 
 def get_available_times(request, username, service, date_url):
 

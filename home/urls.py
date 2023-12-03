@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout_user/', views.logout_user, name="logout_user"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('schedule/<str:date_url>', views.schedule, name="schedule"),
+    path('schedule/delete/<int:id>', views.delete_schedule, name="delete_schedule"),
     path('services/', views.get_services, name="services"),
     path('services/delete/<int:id>/', views.delete_service, name="delete_service"),
     path('available_times/<str:username>/<slug:service>/<str:date_url>', views.get_available_times, name="available_times"),
