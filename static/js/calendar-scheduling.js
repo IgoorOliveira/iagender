@@ -5,14 +5,13 @@ const timeContainer = document.querySelector(".time-container");
 const month = document.querySelector(".month");
 const date = getDate()
 
-const operating_days = []
 let teste = {}
 const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 const fetchOperatingDays = async () =>{
     const paramUrl = getParametersUrl()
 
-    return await fetch(`http://127.0.0.1:8000/operating_days/${paramUrl.username}/${paramUrl.service}/${paramUrl.date}`).then(res => res.json())
+    return await fetch(`http://127.0.0.1:8000/available_times/${paramUrl.username}/${paramUrl.service}/${paramUrl.date}`).then(res => res.json())
 }
 
 const getOperatingDays = async () => {

@@ -1,15 +1,17 @@
 {% load static %}
 <div class="w-full flex flex-col items-center bg-complement p-4 rounded-lg gap-4">
-    <div class="w-full px-2 flex justify-between">
-        <h2 class="font-semibold text-lg">Agenda</h2>
-        <a href="#">
-            <img class="cursor-pointer rounded-lg p-1 border border-zinc-950/10"
-                src="{% static 'assets/svg/more-horizontal.svg' %}" alt="">
-        </a>
-    </div>
+    {% if dashboard %}
+        <div class="w-full px-2 flex justify-between">
+            <h2 class="font-semibold text-lg">Agenda</h2>
+            <a href="#">
+                <img class="cursor-pointer rounded-lg p-1 border border-zinc-950/10"
+                    src="{% static 'assets/svg/more-horizontal.svg' %}" alt="">
+            </a>
+        </div>
+    {% endif %}
     <div class="w-[85%] aspect-1 flex flex-col calendar">
         <div class="w-full flex bg-zinc-100 rounded-lg p-2 justify-between items-center gap-4 mb-2">
-            <img class="cursor-pointer rounded-lg bg-primary  p-1 hover:bg-primary/30 hover:stroke-primary prev-month-button"
+            <img class="cursor-pointer rounded-lg bg-primary p-1 hover:bg-primary/30 hover:stroke-primary prev-month-button"
                 src="{% static 'assets/svg/chevron-left.svg' %}" alt="">
             <p class="font-medium month"></p>
             <img class="cursor-pointer rounded-lg bg-primary p-1 hover:bg-primary/20 hover:stroke-primary next-month-button "

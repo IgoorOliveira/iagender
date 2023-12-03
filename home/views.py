@@ -100,13 +100,21 @@ def dashboard(request):
         return render(request, "dashboard.html")
 
 @login_required
-def schedule(request):
+def schedule(request, date_url):
     if request.method == "GET":
-        return render(request, "schedule.html")      
+
+        establishment = request.user.establishment
+
+        schedules = Schedules.objects.filter(establishment=establishment, date=date_url)
+
+        context = {
+            "schedule": schedule
+        }
+
+        return render(request, "schedule.html", context=context)      
 
 
-def get_operating_days(request, username, service, date_url):
-
+def get_available_times(request, username, service, date_url):
 
     if request.method == "GET":
         context = {
@@ -146,6 +154,34 @@ def get_operating_days(request, username, service, date_url):
                 context["operating_days"][day] = get_available_hour(service_instance, establishment, intervals, year, month, day)
         return JsonResponse(context)
 
+@login_required
+def get_operating_days(request, date_url):
+
+    if request.method == "GET":
+        operating_days = []
+        weekdays = {
+            1: "Segunda",
+            2: "Terça",
+            3: "Quarta",
+            4: "Quinta",
+            5: "Sexta",
+            6: "Sábado",
+            7: "Domingo",
+        }
+
+        days = request.user.establishment.establishment_day.filter(status=True)
+        available_day_week = [day.day.name for day in days]
+        year, month, day = [int(i) for i in date_url.split("-")]
+        first_day_next_month = date(year, month, 1) + timedelta(days=32)
+        last_day_month = (first_day_next_month.replace(day=1) - timedelta(days=1)).day
+
+        for day in range(1, last_day_month + 1):
+            day_of_week = date(year, month, day).weekday()
+
+            if weekdays[day_of_week + 1] in available_day_week:
+                operating_days.append(day)
+
+        return JsonResponse(operating_days, safe=False)
 
 @login_required
 def get_services(request):
