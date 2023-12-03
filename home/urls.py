@@ -9,6 +9,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name="dashboard"),
     path('schedule/<str:date_url>', views.schedule, name="schedule"),
     path('services/', views.get_services, name="services"),
+    path('services/delete/<int:id>/', views.delete_service, name="delete_service"),
     path('available_times/<str:username>/<slug:service>/<str:date_url>', views.get_available_times, name="available_times"),
     path('operating_days/<str:date_url>', views.get_operating_days, name="operating_days"),
     path('settings/', views.get_settings, name="settings"),

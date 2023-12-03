@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse
+from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,6 @@ from .utils import remove_mask_phone, create_operating_days, validate_form, get_
 from django.http import HttpResponse, JsonResponse
 from .models import Category, Adress, Day, Interval, Establishment, EstablishmentDay, Schedules, Client, Service
 from .forms import EstablishmentForm, AdressForm, ServiceForm, CategoryForm, ClientForm
-from urllib.parse import urlencode
 from datetime import date, timedelta, datetime
 
 def index(request):
@@ -197,17 +197,37 @@ def get_operating_days(request, date_url):
 
 @login_required
 def get_services(request):
+    establishment = request.user.establishment
+    context = {
+        "services": Service.objects.filter(establishment=establishment)
+    }
+
     if request.method == "GET":
-        return render(request, 'services.html')
+        return render(request, 'services.html', context=context)
     else:
         form = ServiceForm(request.POST.copy())
         if 'duration' in form.data:
-
-            form.data['duration'] = form.data['duration'][:-1]
+            form.data['duration'] = timedelta(hours=int(form.data['duration'][:-1]))
+            print(form.data['duration'])
 
         if form.is_valid():
             service_instance = form.save(commit=False)
-        return redirect("services")
+            service_instance.slug = slugify(form.cleaned_data['name'])
+            service_instance.establishment = establishment
+            service_instance.save()
+            return render(request, 'services.html', context=context)
+            
+        else:
+            return HttpResponse(form.errors)
+    
+    
+
+@login_required
+def delete_service(request, id):
+
+    if request.method == "GET":
+        Service.objects.filter(id=id).delete()
+        return redirect('services')
 
 @login_required
 def get_settings(request):
@@ -219,7 +239,7 @@ def get_settings(request):
         return render(request, "settings.html", context)
     else:
         form = ServiceForm(request.POST)
-
+        
         if form.is_valid():
             form.save()
     
