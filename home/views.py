@@ -108,7 +108,7 @@ def schedule(request, date_url):
         schedules = Schedules.objects.filter(establishment=establishment, date=date_url)
 
         context = {
-            "schedule": schedule
+            "schedules": schedules
         }
 
         return render(request, "schedule.html", context=context)      
@@ -448,7 +448,7 @@ def get_client(request, username, service, date_url, time):
                     date = date_instance,
                     initial_hour = initial_hour_datetime,
                     end_hour = end_hour_datetime,
-                    client = client,
+                    client = client_instance,
                     service = service_instance,
                     establishment = user.establishment
                 )
