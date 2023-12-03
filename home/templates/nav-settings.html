@@ -1,9 +1,9 @@
 {% load static %}
 <nav class="flex w-full">
-    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-primary"
+    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'profile' %} border-b-primary font-semibold {% endif %}"
         href="{% url 'update_profile' %}">Perfil</a>
-    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700" href="{% url 'update_company' %}">Empresa</a>
-    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700" href="{% url 'update_category' %}">Categoria</a>
-    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700" href="{% url 'update_address' %}">Endereço</a>
-    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700" href="{% url 'settings_schedule' %}">Agenda</a>
+    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'company' %} border-b-primary font-semibold {% endif %}" href="{% url 'update_company' %}">Empresa</a>
+    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'category' %} border-b-primary font-semibold {% endif %}" href="{% url 'update_category' %}">Categoria</a>
+    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'address' %} border-b-primary font-semibold {% endif %}" href="{% url 'update_address' %}">Endereço</a>
+    <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'schedule' %} border-b-primary font-semibold {% endif %}" href="{% url 'settings_schedule' %}">Agenda</a>
 </nav>

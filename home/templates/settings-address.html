@@ -6,7 +6,7 @@
 {% endblock head %}
 {% block section %}
 <section class="flex flex-col gap-8 w-full h-full rounded-lg bg-complement p-8">
-    {% include 'nav-settings.html' %}
+    {% include 'nav-settings.html' with active_button='address' %}
    <div class="flex justify-around items-center gap-2 ">
     <div class="flex flex-col gap-2">
         <h2 class="text-2xl font-semibold">Endereço</h2>
