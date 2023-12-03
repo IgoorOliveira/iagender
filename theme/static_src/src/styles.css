@@ -92,9 +92,11 @@
 
 
 
-.time-container::-webkit-scrollbar {
+.time-container::-webkit-scrollbar, 
+.service-container::-webkit-scrollbar {
     display: none;
 }
+
 
 
 

@@ -97,15 +97,27 @@ def logout_user(request):
 @login_required
 def dashboard(request):
     if request.method == "GET":
-        return render(request, "dashboard.html")
+        establishment = request.user.establishment
+        last_schedulings = Schedules.objects.filter(establishment=establishment).order_by("-created_at")[:3]
+        print(last_schedulings)
+        
+    
+        context = {
+            "date_today": "2023-12-03",
+            "qty_client_of_day": Schedules.objects.filter(establishment=establishment, date=date.today()).count(),
+            "qty_client_of_month": Schedules.objects.filter(establishment=establishment, date__year=date.today().year, date__month=date.today().month).count(),
+            "last_schedulings": last_schedulings
+        }
+        return render(request, "dashboard.html", context=context)
 
 @login_required
 def schedule(request, date_url):
+    print(date_url)
     if request.method == "GET":
 
         establishment = request.user.establishment
 
-        schedules = Schedules.objects.filter(establishment=establishment, date=date_url)
+        schedules = Schedules.objects.filter(establishment=establishment, date=date_url).order_by("initial_hour")
 
         context = {
             "schedules": schedules

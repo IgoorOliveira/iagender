@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="flex w-full h-screen ">
-    {% include 'aside-dashboard.html' %}
+    {% include 'aside-dashboard.html' with active_button='dashboard' %}
     <div class="flex-1 flex flex-col">
        {% include 'header-dashboard.html' with name="Dashboard" %}
         <main class="flex gap-4 bg-zinc-200 flex-1 p-4">
@@ -17,9 +17,12 @@
                     <div class="h-1/2 grid grid-cols-3 gap-4 px-4 py-8 rounded-lg bg-primary overflow-hidden">  
                         <div class="flex flex-col gap-4 bg-complement rounded-lg p-4">
                             <p class="font-semibold">Clientes do dia</p>
-                            <p><span class="text-4xl font-semibold">10</span> Clientes</p>
+                            <p><span class="text-4xl font-semibold">{{qty_client_of_day}}</span> Clientes</p>
                         </div>
-                        <div class="bg-complement rounded-lg"></div>
+                        <div class="flex flex-col gap-4 bg-complement rounded-lg p-4">
+                            <p class="font-semibold">Clientes do mês</p>
+                            <p><span class="text-4xl font-semibold">{{qty_client_of_month}}</span> Clientes</p>
+                        </div>
                         <div class="bg-complement rounded-lg"></div>
                     </div>
                     <div class="h-1/2 rounded-lg bg-complement p-4">
@@ -32,26 +35,31 @@
                                         alt="">
                                 </a>
                             </div>
-                            <div class="flex justify-between items-center border-b p-2">
-                                <p>Igor Oliveira</p>
-                                <p class="semibold">Serviço A</p>
-                                <p>24 nov</p>
+                            <div class="flex flex-col gap odd:bg-primary even:bg-complement">
+                                {% if last_schedulings %}
+                                    {% for schedule in last_schedulings %}
+                                        <a href="{% url 'schedule' date_url=schedule.date %}" class="flex justify-between items-center px-4 py-[6px] border-b cursor-pointer ">
+                                            <div>
+                                                <div class="flex items-center gap-2">
+                                                    <img src="{% static 'assets/svg/clock.svg' %}" alt="">
+                                                    <p class="text-zinc-700">{{schedule.date|date:"D d M Y"}}</p>
+                                                    
+                                                </div>
+                                                <div class="flex items-center gap-2">
+                                                    <img src="{% static 'assets/svg/user-2.svg' %}" alt="">
+                                                    <p class="text-zinc-700">{{schedule.client.name}}</p> 
+                                                </div>
+                                            </div>
+                                            {% if schedule.date.date == now.date %}
+                                                <p>{{schedule.created_at|time}}</p>
+                                            {% else %}
+                                                <p>{{schedule.created_at|date}}</p>
+                                            {% endif %}
+                                        </a>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
-                            <div class="flex justify-between items-center border-b p-2">
-                                <p>Igor Oliveira</p>
-                                <p class="semibold">Serviço A</p>
-                                <p>24 nov</p>
-                            </div>
-                            <div class="flex justify-between items-center border-b p-2">
-                                <p>Igor Oliveira</p>
-                                <p class="semibold">Serviço A</p>
-                                <p>24 nov</p>
-                            </div>
-                            <div class="flex justify-between items-center border-b p-2">
-                                <p>Igor Oliveira</p>
-                                <p class="semibold">Serviço A</p>
-                                <p>24 nov</p>
-                            </div>
+                            
                             
                         </div>
                     </div>
