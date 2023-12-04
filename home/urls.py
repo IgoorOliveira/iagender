@@ -13,6 +13,7 @@ urlpatterns = [
     path('services/delete/<int:id>/', views.delete_service, name="delete_service"),
     path('available_times/<str:username>/<slug:service>/<str:date_url>', views.get_available_times, name="available_times"),
     path('operating_days/<str:date_url>', views.get_operating_days, name="operating_days"),
+    path('days-with-schedule/<str:date_url>', views.get_days_with_schedule, name="days_with_schedule"),
     path('settings/', views.get_settings, name="settings"),
     path('settings/profile', views.update_profile, name="update_profile"),
     path('settings/company', views.update_company, name="update_company"),

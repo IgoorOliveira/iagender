@@ -98,6 +98,22 @@
 }
 
 
+.days-with-service {
+  position: relative;
+}
+.days-with-service:before {
+  content: "";
+  position: absolute;
+  background-color: #684BD8;
+  border-radius: 2px;
+  width: 6px;
+  aspect-ratio: 1/1;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+
 
 
 

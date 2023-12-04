@@ -205,10 +205,29 @@ def get_operating_days(request, date_url):
         return JsonResponse(operating_days, safe=False)
 
 @login_required
+def get_days_with_schedule(request, date_url):
+    if request.method == "GET":
+        context = {
+            "days_with_schedule": []
+        }
+        establishment = request.user.establishment
+        year, month, day = [int(i) for i in date_url.split("-")]
+
+        schedules = Schedules.objects.filter(establishment=establishment, date__month=month, date__year=year)
+        context["days_with_schedule"] = list(set(schedule.date.day for schedule in schedules))
+        return JsonResponse(context)
+    
+
+
+
+@login_required
 def get_services(request):
     establishment = request.user.establishment
+    services = Service.objects.filter(establishment=establishment)
+    for service in services:
+        service.duration =  format_duration(service.duration)
     context = {
-        "services": Service.objects.filter(establishment=establishment)
+        "services": services
     }
 
     if request.method == "GET":
@@ -391,7 +410,9 @@ def delete_interval(request, id):
 
 def get_page(request, username):
     user = User.objects.get(username=username)
-    
+    services = user.establishment.services.all()
+    for service in services:
+        service.duration = format_duration(service.duration)
     if user:
         context = {
             "user": {
@@ -400,7 +421,7 @@ def get_page(request, username):
                 "username": user.username,
             },
             "address": user.establishment.adress,
-            "services": user.establishment.services.all(),
+            "services": services,
             "date": datetime.now().strftime('%Y-%m')
         }
     

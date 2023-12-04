@@ -6,7 +6,9 @@ const prevDayButton = document.querySelector(".prev-day-button");
 const timeContainer = document.querySelector(".time-container");
 const month = document.querySelector(".month");
 const date = getDate()
-let operating_days = {}
+let daysWithSchedule = {
+    "days": []
+}
 const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
 
 const day_of_week = {
@@ -19,17 +21,18 @@ const day_of_week = {
     7: "Domingo"
 }
 
-const fetchOperatingDays = async () =>{
+const fetchDaysWithSchedule = async () =>{
     const paramUrl = getParametersUrl()
 
-    return await fetch(`http://127.0.0.1:8000/operating_days/${paramUrl.date}`).then(res => res.json())
+    return await fetch(`http://127.0.0.1:8000/days-with-schedule/${paramUrl.date}`).then(res => res.json())
 }
 
-const getOperatingDays = async () => {
-    const res = await fetchOperatingDays();
-    operating_days = [ ...res ];
+const getDaysWithSchedule = async () => {
+    const res = await fetchDaysWithSchedule();
+    daysWithSchedule["days"] = res["days_with_schedule"];
+    console.log(res["days_with_schedule"])
     renderCalendar();
-    renderDay()
+    renderDay();
 
 }
 
@@ -69,18 +72,12 @@ function createDayComponent(value, style) {
     const day = document.createElement("a");
     day.classList.add("day", style);
     day.innerText = value;
-
     if(style == "current-days") {
-        if(operating_days.includes(value)) {
-            day.classList.add("open-day");
-            day.addEventListener("click", () =>{
-        
-            })
-        }
-        else {
-            day.classList.add("bg-zinc-100", "text-zinc-500");
+        if(daysWithSchedule["days"].includes(value)) {
+            day.classList.add("days-with-service");
         }
     } 
+    day.href = `${window.location.origin}/schedule/${date.getFullYear()}-${date.getMonth() + 1}-${value}`
     return day;
 }
 
@@ -105,12 +102,9 @@ function renderDay() {
 }
 
 
-function ModifyUrl() {
+function ModifyUrl(year = date.getFullYear(), month=date.getMonth(), day=date.getDate()) {
     const url = window.location.href;
     const urlParts = url.split("/");
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
 
     urlParts[urlParts.length - 1] = `${year}-${month + 1}-${day}`;
     
@@ -160,4 +154,4 @@ nextDayButton.addEventListener("click", ()=> {
 })
 
 
-getOperatingDays()
+getDaysWithSchedule()
