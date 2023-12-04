@@ -138,7 +138,6 @@ function getParametersUrl() {
 
     return paramUrl
 }
-getOperatingDays()
 
 function ModifyUrl() {
     const url = window.location.href;
@@ -192,3 +191,14 @@ function clearTimeButton() {
         timeContainer.removeChild(timeContainer.firstChild);
     }
 }
+
+window.addEventListener("load", () =>{
+    setTimeout(() => {
+        const skeletonContainer = document.querySelector(".skeleton-container");
+        const pageDate = document.querySelector(".page-date");
+        skeletonContainer.classList.add("hidden");
+        pageDate.classList.remove("hidden")
+        pageDate.classList.add("grid")
+        getOperatingDays()
+    }, 500)
+})
