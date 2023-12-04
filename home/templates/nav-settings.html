@@ -1,5 +1,5 @@
 {% load static %}
-<nav class="flex w-full">
+<nav class="flex w-full ">
     <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'profile' %} border-b-primary font-semibold {% endif %}"
         href="{% url 'update_profile' %}">Perfil</a>
     <a class="rounded-t-lg px-4 py-2 bg-complement text-zinc-700 border-b-2 border-transparent {% if active_button == 'company' %} border-b-primary font-semibold {% endif %}" href="{% url 'update_company' %}">Empresa</a>

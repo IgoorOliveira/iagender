@@ -107,6 +107,7 @@ def dashboard(request):
         
     
         context = {
+            "photo_profile": establishment.photo,
             "date_today": "2023-12-03",
             "qty_client_of_day": Schedules.objects.filter(establishment=establishment, date=date.today()).count(),
             "qty_client_of_month": Schedules.objects.filter(establishment=establishment, date__year=date.today().year, date__month=date.today().month).count(),
@@ -116,7 +117,6 @@ def dashboard(request):
 
 @login_required
 def schedule(request, date_url):
-    print(date_url)
     if request.method == "GET":
 
         establishment = request.user.establishment
@@ -124,6 +124,7 @@ def schedule(request, date_url):
         schedules = Schedules.objects.filter(establishment=establishment, date=date_url).order_by("initial_hour")
 
         context = {
+            "photo_profile": establishment.photo,
             "schedules": schedules
         }
 
@@ -228,9 +229,11 @@ def get_days_with_schedule(request, date_url):
 def get_services(request):
     establishment = request.user.establishment
     services = Service.objects.filter(establishment=establishment)
+    
     for service in services:
         service.duration =  format_duration(service.duration)
     context = {
+        "photo_profile": establishment.photo,
         "services": services
     }
 
@@ -264,6 +267,7 @@ def delete_service(request, id):
 @login_required
 def get_settings(request):
     context = {
+        "photo_profile": reques.user.establishment.photo,
         "categories": get_categories(),
         "days": get_days()
     }
@@ -277,7 +281,9 @@ def get_settings(request):
     
 @login_required
 def update_profile(request):
+    establishment = request.user.establishment
     context = {
+        "photo_profile": establishment.photo,
         "user": get_profile(request.user)
     }
     if request.method == 'GET':
@@ -298,7 +304,9 @@ def update_profile(request):
     
 @login_required
 def update_company(request):
+    establishment = request.user.establishment
     context = {
+        "photo_profile": establishment.photo,
         "user": get_profile(request.user),
         "company": get_establishment(request.user)
     }
@@ -306,7 +314,7 @@ def update_company(request):
         return render(request, "settings-company.html", context)
     else:
         user = request.user
-        form = EstablishmentForm(request.POST.copy(), instance=user.establishment)
+        form = EstablishmentForm(request.POST.copy(), request.FILES, instance=establishment)
 
         if "phone" in form.data:
             form.data['phone'] = remove_mask_phone(form.data['phone'])
@@ -315,19 +323,29 @@ def update_company(request):
             user.username = request.POST.get("username")
             user.save()
             form.save()
+        else:
+            return HttpResponse(form.errors)
         return redirect("/settings/company")
-    
+
+
+@login_required 
+def delete_photo_profile(request):
+    establishment = request.user.establishment
+    establishment.photo = None
+    establishment.save()
+    return redirect("update_company")
 @login_required
 def update_category(request):
     category = get_category(request.user).category_name
+    establishment = request.user.establishment
     context = {
+        "photo_profile": establishment.photo,
         "categories": get_categories(),
         "active_category": category
     }
     if request.method == 'GET':
         return render(request, "settings-category.html", context)
     else:
-        establishment = request.user.establishment
         category = Category.objects.get(establishment=establishment)
         establishment.category.set(request.POST.get("category_name"))
         
@@ -336,7 +354,9 @@ def update_category(request):
     
 @login_required
 def update_address(request):
+    establishment = request.user.establishment
     context = {
+        "photo_profile": establishment.photo,
         "address": get_address(request.user)
     }
     if request.method == 'GET':
@@ -353,7 +373,9 @@ def update_address(request):
     
 @login_required
 def get_settings_schedule(request):
+    establishment = request.user.establishment
     context = {
+        "photo_profile": establishment.photo,
         "days": get_schedule(request.user),
         "times": get_time(0, 23, 15)
     }
@@ -413,33 +435,46 @@ def delete_interval(request, id):
 
 
 def get_page(request, username):
-    user = User.objects.get(username=username)
-    services = user.establishment.services.all()
-    for service in services:
-        service.duration = format_duration(service.duration)
-    if user:
-        context = {
-            "user": {
-                "first_name": user.first_name,
-                "last_name": user.last_name,
-                "username": user.username,
-            },
-            "address": user.establishment.adress,
-            "services": services,
-            "date": datetime.now().strftime('%Y-%m')
-        }
+    user = User.objects.filter(username=username).first()
+    context = {}
     
 
     if request.method == "GET":
-        return render(request, "page-profissional.html", context=context)
+
+        if user:
+            
+            establishment = user.establishment
+            services = user.establishment.services.all()
+            for service in services:
+                service.duration = format_duration(service.duration)
+
+            context = {
+                "photo_profile": establishment.photo,
+                "user": {
+                    "first_name": user.first_name,
+                    "last_name": user.last_name,
+                    "username": user.username,
+                },
+                "address": user.establishment.adress,
+                "services": services,
+                "date": datetime.now().strftime('%Y-%m')
+            }
+        else:
+            return HttpResponse("Usuário não encontrado!")
+    return render(request, "page-profissional.html", context=context)
     
 
 def get_details_date(request, username, service, date):
-    
+    user = User.objects.filter(username=username).first()
+    establishment = user.establishment
     if request.method == "GET":
-        return render(request, "page-date.html")
+        context = {
+            "photo_profile": establishment.photo,
+        }
+        return render(request, "page-date.html", context=context)
     
 def get_client(request, username, service, date_url, time):
+    user = User.objects.get(username=username)
     year, month, day = [int(i) for i in date_url.split("-")]
     date_instance = date(year, month, day)
 
@@ -469,27 +504,28 @@ def get_client(request, username, service, date_url, time):
     }
     if request.method == "GET":
 
+        if user:
+            establishment = user.establishment
+            service_instance = Service.objects.get(slug=service)
+            service_name = service_instance.name
+            service_duration = format_duration(service_instance.duration)
 
-        service_instance = Service.objects.get(slug=service)
-        service_name = service_instance.name
-        service_duration = format_duration(service_instance.duration)
 
+            date_schedule = f"{day_en_ptbr[date_instance.strftime('%A')]}, {day} de {name_month[month]} de {year}"
 
-        date_schedule = f"{day_en_ptbr[date_instance.strftime('%A')]}, {day} de {name_month[month]} de {year}"
-
-        context = {
-            "username": username,
-            "service": service,
-            "date_url": date_url,
-            "time": time,
-            "service_name": service_name,
-            "service_duration": service_duration,
-            "date_schedule": date_schedule
-        }
+            context = {
+                "photo_profile": establishment.photo,
+                "username": username,
+                "service": service,
+                "date_url": date_url,
+                "time": time,
+                "service_name": service_name,
+                "service_duration": service_duration,
+                "date_schedule": date_schedule
+            }
 
         return render(request, "page-client.html", context=context)
     else:
-        user = User.objects.get(username=username)
         service_instance = Service.objects.get(slug=service)
         if user:
 

@@ -18,6 +18,7 @@ urlpatterns = [
     path('settings/', views.get_settings, name="settings"),
     path('settings/profile', views.update_profile, name="update_profile"),
     path('settings/company', views.update_company, name="update_company"),
+    path('settings/company/delete-photo-profile', views.delete_photo_profile, name="delete_photo_profile"),
     path('settings/category', views.update_category, name="update_category"),
     path('settings/address', views.update_address, name="update_address"),
     path('settings/schedule', views.get_settings_schedule, name="settings_schedule"),

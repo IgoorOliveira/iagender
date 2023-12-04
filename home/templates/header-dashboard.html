@@ -4,7 +4,7 @@
 
     <nav>
         <div class="flex items-center gap-2 border border-zinc-950/10 px-4 py-2 rounded-lg">
-            <img class="rounded-full w-10 h-10" src="{% static 'assets/foto_github.png' %}" alt="">
+            <img class="rounded-full w-10 h-10" src="{% if photo_profile %} {{photo_profile.url}} {% else %} {% static 'assets/no_profile.jpg' %} {% endif %}" alt="">
             <p class="font-semibold">Igor Oliveira</p>
 
         </div>

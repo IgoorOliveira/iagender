@@ -9,7 +9,7 @@
 <div class="w-full h-full p-8 grid grid-cols-2">
     <div class="flex flex-col items-center gap-8">
         <div class=" w-full flex gap-2 items-center">
-            <img class="w-20 h-20 rounded-full" src="{% static 'assets/foto_github.png' %}" alt="">
+            <img class="w-20 h-20 rounded-full" src="{% if photo_profile %} {{photo_profile.url}} {% else %} {% static 'assets/no_profile.jpg' %} {% endif %}" alt="">
             <p class="font-semibold text-lg">Igor Oliveira</p>
     
         </div>

@@ -12,7 +12,7 @@
             <h2 class="text-2xl font-semibold">Empresa</h2>
             <p class="text-zinc-700 text-lg">Adicione ou modifique informações da empresa</p>
         </div>
-        <form action="{% url 'update_company' %}" method="post" class="flex flex-col gap-4 w-2/5">
+        <form action="{% url 'update_company' %}" method="post" enctype="multipart/form-data" class="flex flex-col gap-4 w-2/5">
             {% csrf_token %}
             <div class="flex flex-col gap-4">
                 <div class="flex flex-col gap-2">
@@ -53,6 +53,34 @@
                             src="{% static 'assets/svg/alert-badge.svg' %}" alt="Ícone de alerta">
                         <img class="absolute top-4 right-4 hidden peer-[.input-sucess]:block"
                             src="{% static 'assets/svg/check-badge.svg' %}" alt="Ícone de sucesso">
+                    </div>
+                    <div class="flex gap-2">
+                        <div class="mt-4">
+                            <label for="inputFile"
+                                class="flex gap-2 cursor-pointer items-center px-4 py-2 bg-emerald-600 text-white duration-150 rounded-lg hover:bg-emerald-700 focus:bg-emerald-700 focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera">
+                                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+                                    <circle cx="12" cy="13" r="3" />
+                                </svg>
+                                Adicionar Foto de perfil
+                            </label>
+                            <input id="inputFile" name="photo" accept="image/" type="file" class="hidden">
+                        </div>
+                        <a href="{% url 'delete_photo_profile' %}" class="mt-4 flex gap-2 cursor-pointer  items-center px-4 py-2 bg-red-500 duration-150 text-white rounded-md hover:bg-red-600 focus:bg-red-600 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                class="lucide lucide-file-x">
+                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                <polyline points="14 2 14 8 20 8" />
+                                <line x1="9.5" x2="14.5" y1="12.5" y2="17.5" />
+                                <line x1="14.5" x2="9.5" y1="12.5" y2="17.5" />
+                            </svg>
+                            <p class="">
+                                Remover Foto de perfil
+                            </p>
+                        
+                        </a>
                     </div>
                 </div>
             </div>

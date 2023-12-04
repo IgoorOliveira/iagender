@@ -36,6 +36,7 @@
                                 </a>
                             </div>
                             <div class="flex flex-col gap-1">
+                                <img src="{{phor_profile.url}}" alt="">
                                 {% for schedule in last_schedulings %}
                                     <a href="{% url 'schedule' date_url=schedule.date %}" class="flex justify-between items-center px-4 py-[6px] border-b cursor-pointer ">
                                         <div>

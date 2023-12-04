@@ -33,6 +33,7 @@ class Day(models.Model):
     
 class Establishment(models.Model):
     company_name = models.CharField(name="company_name", max_length=100, blank=True)
+    photo = models.ImageField(name="photo", upload_to="profile/", null=True)
     phone = models.CharField(max_length=14)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="establishment")
     adress = models.OneToOneField(Adress, on_delete=models.CASCADE)
