@@ -6,6 +6,7 @@ urlpatterns = [
     path('login/', views.login_user, name="login_user"),
     path('auth/', views.get_user, name="auth"),
     path('logout_user/', views.logout_user, name="logout_user"),
+    path('delete/user', views.delete_user, name="delete_user"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('schedule/<str:date_url>', views.schedule, name="schedule"),
     path('schedule/delete/<int:id>', views.delete_schedule, name="delete_schedule"),

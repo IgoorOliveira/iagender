@@ -92,7 +92,11 @@ def logout_user(request):
     if request.method == "GET":
         logout(request)
         return redirect("/")
-
+@login_required
+def delete_user(request):
+    if request.method == "GET":
+        User.objects.filter(username=request.user).delete()
+        return redirect("/")
 
 @login_required
 def dashboard(request):
