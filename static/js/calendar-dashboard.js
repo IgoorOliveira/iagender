@@ -5,7 +5,7 @@ const nextDayButton = document.querySelector(".next-day-button");
 const prevDayButton = document.querySelector(".prev-day-button");
 const timeContainer = document.querySelector(".time-container");
 const month = document.querySelector(".month");
-const date = getDate()
+const date = new Date()
 let daysWithSchedule = {
     "days": []
 }
@@ -22,21 +22,18 @@ const day_of_week = {
 }
 
 const fetchDaysWithSchedule = async () =>{
-    const paramUrl = getParametersUrl()
-    return await fetch(`http://127.0.0.1:8000/days-with-schedule/${paramUrl.date}`).then(res => res.json())
+    return await fetch(`http://127.0.0.1:8000/days-with-schedule/${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`).then(res => res.json())
 }
 
 const getDaysWithSchedule = async () => {
     const res = await fetchDaysWithSchedule();
     daysWithSchedule["days"] = res["days_with_schedule"];
-    console.log(res["days_with_schedule"])
     renderCalendar();
-    renderDay();
-
 }
 
 const renderCalendar = () =>{
     const days = []
+    clearCalendar()
     let currentMonth = date.getMonth()
     const currentYear = date.getFullYear()
 
@@ -81,76 +78,21 @@ function createDayComponent(value, style) {
 }
 
 
-function getDate() {
-    const url = window.location.href;
-    const urlParts = url.split("/");
-    
-    const date = urlParts[urlParts.length - 1].split("-")
-    const [year, month, day] = date
-    
-    return new Date(year, month - 1, day);
-}
-
-
-function renderDay() {
-    const dayTitle = document.querySelector(".day-title");
-    const year = date.getFullYear()
-    let month = date.getMonth()
-    const day = date.getDate()
-    dayTitle.innerText = `${day_of_week[date.getDay() + 1]}, ${day} de ${months[month].toLowerCase()} ${year}`
-}
-
-
-function ModifyUrl(year = date.getFullYear(), month=date.getMonth(), day=date.getDate()) {
-    const url = window.location.href;
-    const urlParts = url.split("/");
-
-    urlParts[urlParts.length - 1] = `${year}-${month + 1}-${day}`;
-    
-    const newUrl = urlParts.join("/");
-    
-    window.location.href = newUrl
-}
-
-function getParametersUrl() {
-
-    const url = window.location.href;
-    const urlParts = url.split("/");
-    const date = urlParts[urlParts.length - 1];
-
-    const paramUrl = {
-        "date": date
-    }
-
-    return paramUrl
-
-}
-
 prevMonthButton.addEventListener("click", () =>{
     if(date.getMonth() === new Date().getMonth() && date.getFullYear() === new Date().getFullYear()) return
 
     date.setMonth(date.getMonth() - 1);
-    ModifyUrl()
-    getOperatingDays()
+    getDaysWithSchedule();
+
 })
 nextMonthButton.addEventListener("click", () =>{
     date.setMonth(date.getMonth() + 1);
-    ModifyUrl()
-    getOperatingDays()
+    getDaysWithSchedule()
 })
-
-prevDayButton.addEventListener("click", ()=> {
-
-    date.setDate(date.getDate() - 1)
-    ModifyUrl()
-    getOperatingDays()
-})
-
-nextDayButton.addEventListener("click", ()=> {
-    date.setDate(date.getDate() + 1)
-    ModifyUrl()
-    getOperatingDays()
-})
-
+function clearCalendar() {
+    while(calendarDays.firstChild) {
+        calendarDays.removeChild(calendarDays.firstChild)
+    }
+}
 
 getDaysWithSchedule()

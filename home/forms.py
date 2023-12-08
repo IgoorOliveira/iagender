@@ -13,7 +13,7 @@ class AdressForm(forms.ModelForm):
 class EstablishmentForm(forms.ModelForm):
     class Meta:
         model = Establishment
-        exclude = ['user', 'adress', 'category', 'days']
+        exclude = ['user', 'adress', 'category', 'days', 'photo']
 
 class CategoryForm(forms.ModelForm):
     class Meta:

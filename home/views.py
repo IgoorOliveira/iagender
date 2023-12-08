@@ -32,7 +32,7 @@ def login_user(request):
             return redirect("login")
         if user is not None:
             login(request, user)
-            return redirect("dashboard")
+            return redirect('dashboard')
         else:
             return redirect("login")
 
@@ -81,7 +81,8 @@ def get_user(request):
                 create_operating_days(request, establishment_instance, operating_days)
 
                 establishment_instance.category.add(Category.objects.get(category_name=category_name))
-                return redirect('dashboard')
+                login(request, user)
+                return redirect("dashboard")
 
         return redirect("/")
     else:
@@ -216,7 +217,7 @@ def get_days_with_schedule(request, date_url):
             "days_with_schedule": []
         }
         establishment = request.user.establishment
-        year, month, day = [int(i) for i in date_url.split("-")]
+        year, month, *array = [int(i) for i in date_url.split("-")]
 
         schedules = Schedules.objects.filter(establishment=establishment, date__month=month, date__year=year)
         context["days_with_schedule"] = list(set(schedule.date.day for schedule in schedules))
@@ -224,40 +225,42 @@ def get_days_with_schedule(request, date_url):
     
 
 
-
 @login_required
 def get_services(request):
     establishment = request.user.establishment
     services = Service.objects.filter(establishment=establishment)
-    
-    for service in services:
-        service.duration =  format_duration(service.duration)
-    context = {
-        "photo_profile": establishment.photo,
-        "services": services
-    }
 
-    if request.method == "GET":
-        return render(request, 'services.html', context=context)
-    else:
+    if request.method == "POST":
+
+
         form = ServiceForm(request.POST.copy())
-        if 'duration' in form.data:
-            form.data['duration'] = timedelta(hours=int(form.data['duration'][:-1]))
-            print(form.data['duration'])
+
+        if "duration" in form.data:
+            form.data["duration"] = timedelta(hours=int(form.data['duration'][:-1]))
 
         if form.is_valid():
             service_instance = form.save(commit=False)
             service_instance.slug = slugify(form.cleaned_data['name'])
             service_instance.establishment = establishment
             service_instance.save()
-            return render(request, 'services.html', context=context)
-            
         else:
-            return HttpResponse(form.errors)
-    
+            print(form.errors)
+    else:
+        form = ServiceForm()
+
+    for service in services:
+        service.duration = format_duration(service.duration)
+
+    context = {
+        "photo_profile": establishment.photo,
+        "services": services,
+        "form": form,
+    }
+
+    return render(request, 'services.html', context=context)
     
 
-@login_required
+@login_required(redirect_field_name="index")
 def delete_service(request, id):
 
     if request.method == "GET":
@@ -267,7 +270,7 @@ def delete_service(request, id):
 @login_required
 def get_settings(request):
     context = {
-        "photo_profile": reques.user.establishment.photo,
+        "photo_profile": request.user.establishment.photo,
         "categories": get_categories(),
         "days": get_days()
     }
@@ -322,6 +325,8 @@ def update_company(request):
         if form.is_valid():
             user.username = request.POST.get("username")
             user.save()
+            form.photo = request.FILES.get("photo")
+            print(form.photo)
             form.save()
         else:
             return HttpResponse(form.errors)

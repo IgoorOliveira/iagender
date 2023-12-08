@@ -191,7 +191,7 @@ function clearTimeButton() {
         timeContainer.removeChild(timeContainer.firstChild);
     }
 }
-
+getOperatingDays()
 window.addEventListener("load", () =>{
     setTimeout(() => {
         const skeletonContainer = document.querySelector(".skeleton-container");
@@ -199,6 +199,6 @@ window.addEventListener("load", () =>{
         skeletonContainer.classList.add("hidden");
         pageDate.classList.remove("hidden")
         pageDate.classList.add("grid")
-        getOperatingDays()
+    
     }, 500)
 })

@@ -1,6 +1,7 @@
 {% extends 'settings.html' %}
 {% load static %}
 {% block head %}
+<script src="{% static 'js/address.js' %}" defer type="module"></script>
 
 
 {% endblock head %}
@@ -43,7 +44,7 @@
         </div>
         <div class="mt-auto w-full flex justify-end items-center gap-6 ">
             <button type="submit" peer class="flex justify-center button-primary confirm-button group">
-                <p class="group-[.active-spinner]:hidden">Confirmar</p>
+                <p class="group-[.active-spinner]:hidden confirm-button">Confirmar</p>
                 <div
                     class="aspect-1 h-6 border-2 rounded-full border-white border-r-transparent animate-spin hidden group-[.active-spinner]:block">
             </button>

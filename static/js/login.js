@@ -32,7 +32,6 @@ export function loginIsValid() {
     updateStyleInput("email", `${isValidEmail? "sucess": "error"}`);
     updateStyleInput("password", `${isValidPassword? "sucess": "error"}`);
 
-    alert(isValidEmail && isValidPassword)
     return isValidEmail && isValidPassword;
 
 } 

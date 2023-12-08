@@ -27,7 +27,8 @@
                             <div>
                                 <div class="flex items-center gap-2">
                                     <img src="{% static 'assets/svg/clock.svg' %}" alt="">
-                                    <p class="text-zinc-700">{{schedule.client.name}}</p>
+                                    <p class="text-zinc-700">{{schedule.initial_hour}} - {{schedule.end_hour}}</p>
+                                   
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <img src="{% static 'assets/svg/work.svg' %}" alt="">
@@ -35,7 +36,7 @@
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <img src="{% static 'assets/svg/user-2.svg' %}" alt="">
-                                    <p class="text-zinc-700">{{schedule.initial_hour}} - {{schedule.end_hour}}</p>
+                                    <p class="text-zinc-700">{{schedule.client.name}}</p>
                                 </div>
                             </div>
                             <a href="{% url 'delete_schedule' schedule.id %}"

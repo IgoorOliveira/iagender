@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
+<script src="{% static 'js/calendar-dashboard.js' %}" defer type="module"></script>
 
 
 {% endblock head %}
@@ -23,7 +24,9 @@
                             <p class="font-semibold">Clientes do mês</p>
                             <p><span class="text-4xl font-semibold">{{qty_client_of_month}}</span> Clientes</p>
                         </div>
-                        <div class="bg-complement rounded-lg"></div>
+                        <div class="bg-complement rounded-lg">
+                            <canvas id="myChart"></canvas>
+                        </div>
                     </div>
                     <div class="h-1/2 rounded-lg bg-complement p-4">
                         
