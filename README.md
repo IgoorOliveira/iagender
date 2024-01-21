@@ -29,3 +29,11 @@
 ![](./static/assets/readme-photo/interface014.png)
 
 ![](./static/assets/readme-photo/interface015.png)
+
+![](./static/assets/readme-photo/interface016.png)
+
+![](./static/assets/readme-photo/interface017.png)
+
+
+![](./static/assets/readme-photo/interface018.png)
+
